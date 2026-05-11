@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 探索 | 李颖</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600;700&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #090a0e;
+    --bg-card: #111318;
+    --bg-card-hover: #171a22;
+    --text: #ededef;
+    --text-secondary: #94969b;
+    --text-tertiary: #5c5e66;
+    --accent: #6c5ce7;
+    --accent-dim: rgba(108,92,231,0.12);
+    --accent-glow: rgba(108,92,231,0.25);
+    --border: rgba(255,255,255,0.06);
+    --border-hover: rgba(255,255,255,0.1);
+    --radius: 20px;
+    --radius-sm: 12px;
+    --ease: cubic-bezier(0.25,0.1,0.25,1);
+    --ease-out: cubic-bezier(0.16,1,0.3,1);
+    --font: 'Instrument Sans', -apple-system, 'Noto Sans SC', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--font);background:var(--bg);color:var(--text);
+    line-height:1.6;-webkit-font-smoothing:antialiased;
+    overflow-x:hidden;font-size:15px;
+  }
+
+  /* ===== Nav ===== */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    height:52px;display:flex;align-items:center;justify-content:center;
+    background:rgba(9,10,14,0.75);backdrop-filter:blur(24px);
+    border-bottom:1px solid transparent;transition:border-color 0.4s;
+  }
+  .nav.scrolled{border-bottom-color:var(--border)}
+  .nav-inner{width:100%;max-width:1200px;display:flex;align-items:center;justify-content:space-between;padding:0 32px}
+  .nav-logo{font-size:14px;font-weight:500;letter-spacing:-0.01em;color:var(--text-secondary);text-decoration:none;display:flex;align-items:center;gap:8px}
+  .nav-logo span{color:var(--accent)}
+  .nav-links{display:flex;list-style:none;gap:4px}
+  .nav-links a{
+    font-size:12px;font-weight:400;color:var(--text-tertiary);
+    padding:6px 14px;text-decoration:none;transition:all 0.3s;
+    border-radius:8px;letter-spacing:0.02em;
+  }
+  .nav-links a:hover{color:var(--text);background:rgba(255,255,255,0.04)}
+
+  /* ===== Hero ===== */
+  .hero{
+    min-height:70vh;display:flex;align-items:center;justify-content:center;
+    padding:80px 24px 40px;position:relative;overflow:hidden;
+  }
+  .hero::before{
+    content:'';position:absolute;top:-40%;left:-20%;width:80%;height:80%;
+    background:radial-gradient(ellipse, rgba(108,92,231,0.06), transparent 70%);
+    pointer-events:none;
+  }
+  .hero-inner{max-width:640px;width:100%;position:relative;z-index:1;text-align:center}
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:4px 14px;border-radius:100px;
+    font-size:11px;font-weight:500;letter-spacing:0.06em;font-family:var(--font-mono);
+    background:var(--accent-dim);color:var(--accent);margin-bottom:24px;
+  }
+  .hero-badge::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--accent)}
+  .hero h1{
+    font-size:clamp(36px,5vw,64px);font-weight:700;letter-spacing:-0.03em;
+    line-height:1.08;margin-bottom:16px;
+  }
+  .hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--accent),#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .hero p{
+    font-size:16px;color:var(--text-secondary);line-height:1.8;
+    max-width:420px;margin:0 auto 0;
+    font-weight:400;
+  }
+
+  /* ===== Grid ===== */
+  .gallery{padding:0 32px 120px;max-width:1200px;margin:0 auto}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+
+  /* ===== Card ===== */
+  .card{
+    position:relative;border-radius:var(--radius);overflow:hidden;
+    background:var(--bg-card);border:1px solid var(--border);
+    cursor:pointer;transition:all 0.5s var(--ease);
+    aspect-ratio:4/3;display:flex;flex-direction:column;
+  }
+  .card:hover{border-color:var(--border-hover);background:var(--bg-card-hover);transform:translateY(-2px)}
+  .card:active{transform:translateY(0)}
+  .card:nth-child(3){margin-top:40px}
+  .card:nth-child(4){margin-top:40px}
+
+  /* Thumbnail area */
+  .card-thumb{
+    flex:1;position:relative;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+    min-height:0;
+  }
+  .card-thumb .thumb-placeholder{
+    width:100%;height:100%;position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    transition:transform 0.75s var(--ease-out);
+  }
+  .card:hover .thumb-placeholder{transform:scale(1.04)}
+  .thumb-visual{
+    font-size:clamp(56px,7vw,80px);line-height:1;
+    filter:drop-shadow(0 4px 20px rgba(108,92,231,0.15));
+    transition:filter 0.5s ease;
+    position:relative;z-index:1;
+  }
+  .card:hover .thumb-visual{filter:drop-shadow(0 8px 32px rgba(108,92,231,0.25))}
+
+  /* Label tag overlay */
+  .card-tag{
+    position:absolute;top:16px;left:16px;z-index:2;
+    padding:3px 10px;border-radius:6px;
+    font-size:10px;font-family:var(--font-mono);font-weight:500;
+    background:rgba(108,92,231,0.15);color:var(--accent);
+    letter-spacing:0.04em;backdrop-filter:blur(8px);
+    border:1px solid rgba(108,92,231,0.1);
+    pointer-events:none;
+  }
+
+  /* Card footer */
+  .card-body{
+    padding:20px 24px 22px;border-top:1px solid var(--border);
+    display:flex;flex-direction:column;gap:4px;
+  }
+  .card-body h3{font-size:17px;font-weight:600;letter-spacing:-0.01em;line-height:1.3}
+  .card-body p{font-size:13px;color:var(--text-secondary);line-height:1.5;font-weight:400}
+  .card-body .hint{
+    font-size:11px;color:var(--text-tertiary);margin-top:4px;
+    display:flex;align-items:center;gap:4px;
+    font-family:var(--font-mono);letter-spacing:0.02em;
+  }
+
+  /* ===== Overlay ===== */
+  .overlay{
+    display:none;position:fixed;inset:0;z-index:200;
+    background:rgba(0,0,0,0.7);backdrop-filter:blur(28px);
+    align-items:center;justify-content:center;
+    opacity:0;transition:opacity 0.5s ease;
+    padding:24px;
+  }
+  .overlay.active{display:flex;opacity:1}
+  .overlay-inner{
+    max-width:720px;width:100%;max-height:90vh;overflow-y:auto;
+    background:var(--bg-card);border:1px solid var(--border);
+    border-radius:var(--radius);padding:48px 44px 44px;
+    position:relative;transform:scale(0.92) translateY(16px);
+    transition:transform 0.5s var(--ease-out);
+  }
+  .overlay.active .overlay-inner{transform:scale(1) translateY(0)}
+  .overlay-inner::-webkit-scrollbar{width:4px}
+  .overlay-inner::-webkit-scrollbar-track{background:transparent}
+  .overlay-inner::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+  .overlay-close{
+    position:absolute;top:16px;right:16px;
+    width:32px;height:32px;border-radius:8px;
+    border:1px solid var(--border);background:transparent;
+    color:var(--text-tertiary);font-size:16px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:all 0.3s;font-family:var(--font);
+  }
+  .overlay-close:hover{background:rgba(255,255,255,0.04);border-color:var(--border-hover);color:var(--text)}
+
+  .overlay-tag{
+    display:inline-block;padding:3px 10px;border-radius:6px;
+    font-size:10px;font-family:var(--font-mono);font-weight:500;
+    background:var(--accent-dim);color:var(--accent);
+    letter-spacing:0.04em;margin-bottom:16px;
+  }
+  .overlay h2{
+    font-size:28px;font-weight:600;letter-spacing:-0.02em;
+    line-height:1.2;margin-bottom:12px;
+  }
+  .overlay-desc{
+    font-size:15px;color:var(--text-secondary);line-height:1.8;
+    margin-bottom:28px;font-weight:400;
+  }
+
+  .overlay-media{
+    display:grid;grid-template-columns:1fr 1fr;gap:12px;
+    margin-bottom:28px;
+  }
+  .overlay-media .om-item{
+    aspect-ratio:16/10;border-radius:var(--radius-sm);
+    background:var(--bg);border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;
+    font-size:32px;min-height:100px;
+    transition:all 0.3s;
+  }
+  .overlay-media .om-item.span-2{grid-column:span 2}
+  .overlay-media .om-item .om-label{
+    font-size:12px;color:var(--text-tertiary);font-family:var(--font-mono);
+    text-align:center;line-height:1.4;
+  }
+
+  .overlay-features{
+    display:grid;grid-template-columns:1fr 1fr;gap:12px;
+    margin-bottom:28px;
+  }
+  .overlay-features .of-item{
+    padding:14px 16px;border-radius:var(--radius-sm);
+    background:rgba(255,255,255,0.02);border:1px solid var(--border);
+  }
+  .overlay-features .of-item .of-icon{font-size:18px;margin-bottom:6px}
+  .overlay-features .of-item h4{font-size:13px;font-weight:600;margin-bottom:4px;letter-spacing:-0.01em}
+  .overlay-features .of-item p{font-size:12px;color:var(--text-secondary);line-height:1.5;font-weight:400}
+
+  .overlay-tech{
+    display:flex;flex-wrap:wrap;gap:6px;margin-bottom:0;
+  }
+  .overlay-tech span{
+    padding:3px 10px;border-radius:6px;
+    font-size:11px;font-family:var(--font-mono);
+    background:rgba(255,255,255,0.03);border:1px solid var(--border);
+    color:var(--text-tertiary);
+  }
+
+  .overlay .back-link{
+    display:inline-flex;align-items:center;gap:6px;
+    margin-top:32px;padding:10px 20px;border-radius:100px;
+    font-size:13px;font-weight:500;font-family:var(--font);
+    border:1px solid var(--border);background:transparent;
+    color:var(--text-secondary);cursor:pointer;text-decoration:none;
+    transition:all 0.3s;
+  }
+  .overlay .back-link:hover{background:rgba(255,255,255,0.04);border-color:var(--border-hover);color:var(--text)}
+
+  /* ===== Footer ===== */
+  footer{
+    text-align:center;padding:40px 32px 48px;
+    color:var(--text-tertiary);font-size:12px;letter-spacing:0.04em;
+    border-top:1px solid var(--border);
+  }
+
+  /* ===== Animations ===== */
+  .card{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease, transform 0.7s var(--ease-out), border-color 0.5s, background 0.5s}
+  .card.visible{opacity:1;transform:translateY(0)}
+  .card:nth-child(2){transition-delay:0.1s}
+  .card:nth-child(3){transition-delay:0.2s}
+  .card:nth-child(4){transition-delay:0.3s}
+
+  /* ===== Responsive ===== */
+  @media(max-width:860px){
+    .grid{grid-template-columns:1fr;gap:16px}
+    .card:nth-child(2),.card:nth-child(3),.card:nth-child(4){margin-top:0}
+    .card{aspect-ratio:auto;min-height:280px}
+    .gallery{padding:0 20px 80px}
+    .overlay-inner{padding:36px 28px 28px}
+    .overlay-media{grid-template-columns:1fr}
+    .overlay-media .om-item.span-2{grid-column:span 1}
+    .overlay-features{grid-template-columns:1fr}
+    .hero h1{font-size:clamp(30px,8vw,44px)}
+  }
+  @media(max-width:480px){
+    .card-body{padding:16px 18px 18px}
+    .card-body h3{font-size:15px}
+    .nav-inner{padding:0 16px}
+    .gallery{padding:0 16px 60px}
+    .overlay-inner{padding:28px 20px 24px}
+    .overlay h2{font-size:22px}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="portfolio.html" class="nav-logo">← <span>LY</span> Portfolio</a>
+    <ul class="nav-links">
+      <li><a href="portfolio.html#contact">联系</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">AI Explorer</div>
+    <h1>用 <em>AI</em> 放大创意</h1>
+    <p>从应用到漫剧，从游戏到工作流——这是我用 AI 探索的四个方向。</p>
+  </div>
+</section>
+
+<section class="gallery">
+  <div class="grid" id="cardGrid">
+
+    <!-- ===== Card 1: App ===== -->
+    <div class="card" data-index="0">
+      <div class="card-thumb">
+        <div class="card-tag">App</div>
+        <div class="thumb-placeholder">
+          <div class="thumb-visual" style="background:linear-gradient(135deg,rgba(108,92,231,0.12),rgba(167,139,250,0.06));width:80%;height:70%;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:clamp(72px,9vw,100px);border:1px solid rgba(108,92,231,0.08)">📱</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3>番茄钟 · 专注力 App</h3>
+        <p>用 AI 辅助设计的全功能番茄钟应用，支持自定义计时、进度环、统计追踪。</p>
+        <div class="hint">✦ 点击查看详情</div>
+      </div>
+    </div>
+
+    <!-- ===== Card 2: AIGC Comic ===== -->
+    <div class="card" data-index="1">
+      <div class="card-thumb">
+        <div class="card-tag">AIGC</div>
+        <div class="thumb-placeholder">
+          <div class="thumb-visual" style="background:linear-gradient(135deg,rgba(236,72,153,0.12),rgba(244,114,182,0.06));width:80%;height:70%;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:clamp(72px,9vw,100px);border:1px solid rgba(236,72,153,0.08)">🎭</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3>AIGC 漫剧 · 都市奇谈</h3>
+        <p>全 AI 生成的漫画剧集，从剧本到分镜到成片，探索 AI 叙事新边界。</p>
+        <div class="hint">✦ 点击查看详情</div>
+      </div>
+    </div>
+
+    <!-- ===== Card 3: Game ===== -->
+    <div class="card" data-index="2">
+      <div class="card-thumb">
+        <div class="card-tag">Game</div>
+        <div class="thumb-placeholder">
+          <div class="thumb-visual" style="background:linear-gradient(135deg,rgba(251,146,60,0.12),rgba(251,191,36,0.06));width:80%;height:70%;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:clamp(72px,9vw,100px);border:1px solid rgba(251,146,60,0.08)">🎮</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3>AI 辅助游戏 · 交互探索</h3>
+        <p>借助 AI 代码生成与设计辅助，快速迭代完成的互动游戏原型。</p>
+        <div class="hint">✦ 点击查看详情</div>
+      </div>
+    </div>
+
+    <!-- ===== Card 4: AI Chat ===== -->
+    <div class="card" data-index="3">
+      <div class="card-thumb">
+        <div class="card-tag">Chat</div>
+        <div class="thumb-placeholder">
+          <div class="thumb-visual" style="background:linear-gradient(135deg,rgba(108,92,231,0.12),rgba(167,139,250,0.06));width:80%;height:70%;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:clamp(72px,9vw,100px);border:1px solid rgba(108,92,231,0.08)">💬</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <h3>AI 对话 · 角色引擎</h3>
+        <p>用 Claude Code Vibe Coding 构建的 AI 角色对话平台，支持角色设定、关系网络、人格复刻与上下文生图。</p>
+        <div class="hint">✦ 点击查看详情</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== Overlay (shared) ===== -->
+<div class="overlay" id="overlay">
+  <div class="overlay-inner" id="overlayInner">
+    <button class="overlay-close" id="overlayClose">✕</button>
+    <div class="overlay-tag" id="oTag"></div>
+    <h2 id="oTitle"></h2>
+    <p class="overlay-desc" id="oDesc"></p>
+    <div class="overlay-media" id="oMedia"></div>
+    <div class="overlay-features" id="oFeatures"></div>
+    <div class="overlay-tech" id="oTech"></div>
+    <button class="back-link" id="oBack">← 返回</button>
+  </div>
+</div>
+
+<footer><p>© 2026 李颖 · AI Explorer</p></footer>
+
+<script>
+  const DATA = [
+    {
+      tag: 'App',
+      title: '番茄钟 · 专注力 App',
+      desc: '一款功能完整的番茄钟应用，结合 AI 设计辅助完成界面与交互方案。支持自定义专注/休息时长、圆形进度环、音效提醒、本地统计看板。从概念到上线，AI 在 UI 设计、交互逻辑、响应式适配等环节提供了关键帮助。',
+      media: [
+        { emoji: '🍅', label: '主界面', span: 2 },
+        { emoji: '⚙️', label: '设置面板' },
+        { emoji: '📊', label: '统计看板' },
+      ],
+      features: [
+        { icon: '🎯', title: '自定义模式', desc: '专注、短休、长休时长可调，适配不同工作节奏。' },
+        { icon: '💾', title: '本地持久化', desc: '完成次数与连续天数自动存储，数据不丢失。' },
+        { icon: '🎵', title: '音效提醒', desc: 'Web Audio 生成三音阶提示音，无需外部资源。' },
+        { icon: '⌨️', title: '键盘快捷操作', desc: '空格启停、R 重置，无需鼠标完成全部操作。' },
+      ],
+      tech: ['JavaScript', 'CSS Animation', 'LocalStorage', 'Web Audio API'],
+    },
+    {
+      tag: 'AIGC',
+      title: '漫剧 · 都市奇谈',
+      desc: '一部完全由 AI 辅助创作的漫画剧集。从世界观设定、剧本撰写、角色设计、分镜 layout 到最终成片渲染，每个环节都深度使用 AI 工具提效。探索了 AI 在叙事内容创作中的完整工作流。',
+      media: [
+        { emoji: '📖', label: '剧本片段', span: 2 },
+        { emoji: '🎨', label: '角色设定' },
+        { emoji: '🖼️', label: '分镜稿' },
+      ],
+      features: [
+        { icon: '📝', title: 'AI 剧本生成', desc: '基于主题提示词生成完整故事框架与对白。' },
+        { icon: '🎨', title: 'AI 视觉风格统一', desc: 'ControlNet + LoRA 确保角色与场景风格一致。' },
+        { icon: '🔄', title: '批量渲染管线', desc: '自动化批量生成分镜画面，大幅缩短制作周期。' },
+        { icon: '🎬', title: '动态漫剧呈现', desc: '静态画面加运镜与配音，形成沉浸式观看体验。' },
+      ],
+      tech: ['Stable Diffusion', 'ControlNet', 'ChatGPT', 'Runway'],
+    },
+    {
+      tag: 'Game',
+      title: 'AI 辅助 · 交互游戏',
+      desc: '通过与 AI 结对编程的方式开发的互动游戏原型。AI 不仅协助生成了大部分代码，还在游戏机制设计、数值平衡、关卡布局等方面提供了创意建议。展示了人机协作开发的高效模式。',
+      media: [
+        { emoji: '🕹️', label: '游戏主界面', span: 2 },
+        { emoji: '🎯', label: '关卡选择' },
+        { emoji: '🏆', label: '成就系统' },
+      ],
+      features: [
+        { icon: '🧩', title: 'AI 结对编程', desc: 'Claude 辅助生成核心游戏逻辑与交互代码。' },
+        { icon: '⚖️', title: 'AI 数值平衡', desc: '基于玩家数据自动调整难度曲线与奖励机制。' },
+        { icon: '🎨', title: 'AI 美术辅助', desc: '使用 Midjourney 生成游戏素材并批量风格化。' },
+        { icon: '📈', title: '快速迭代', desc: '从概念到可玩原型仅用数天，AI 大幅缩短反馈周期。' },
+      ],
+      tech: ['JavaScript', 'HTML5 Canvas', 'Claude AI', 'Midjourney'],
+    },
+    {
+      tag: 'Chat',
+      title: 'AI 对话 · 角色引擎',
+      desc: '用 Claude Code Vibe Coding 全栈构建的 AI 角色对话平台。不止于「你问我答」——通过精细化角色设定、关系网络配置、上下文触发生图、现实好友聊天记录导入与人格复刻，让 AI 从「对话工具」进化为「有性格的伙伴」。',
+      media: [
+        { emoji: '🎭', label: '角色设定', span: 2 },
+        { emoji: '💞', label: '关系网络' },
+        { emoji: '🖼️', label: '上下文生图' },
+      ],
+      features: [
+        { icon: '🎭', title: '精细化角色设定', desc: '性格标签、说话风格、语气口癖、行为边界——结构化角色卡，替代传统长 prompt，角色一致性大幅提升。' },
+        { icon: '💞', title: '关系网络配置', desc: '朋友、恋人、同僚……定义角色之间的人际位置与相处模式，让对话自然流淌。' },
+        { icon: '🖼️', title: '上下文触发生图', desc: 'AI 根据对话氛围自动发送配图——聊美食发食物、看夕阳发风景，像真人一样分享生活瞬间。' },
+        { icon: '👤', title: '现实朋友人格复刻', desc: '导入真实聊天记录，AI 自动学习对方的说话方式、回复习惯、语气特征，重建一个有温度的「数字分身」。' },
+      ],
+      tech: ['Claude Code', 'Vibe Coding', 'HTML/CSS/JS', '角色卡系统', 'AI API'],
+    },
+  ];
+
+  const overlay = document.getElementById('overlay');
+  const overlayInner = document.getElementById('overlayInner');
+  const oTag = document.getElementById('oTag');
+  const oTitle = document.getElementById('oTitle');
+  const oDesc = document.getElementById('oDesc');
+  const oMedia = document.getElementById('oMedia');
+  const oFeatures = document.getElementById('oFeatures');
+  const oTech = document.getElementById('oTech');
+  const oBack = document.getElementById('oBack');
+  const oClose = document.getElementById('overlayClose');
+
+  document.querySelectorAll('.card[data-index]').forEach(card => {
+    card.addEventListener('click', () => {
+      const idx = parseInt(card.dataset.index);
+      const d = DATA[idx];
+      if (!d) return;
+
+      oTag.textContent = d.tag;
+      oTitle.textContent = d.title;
+      oDesc.textContent = d.desc;
+
+      oMedia.innerHTML = d.media.map(m =>
+        `<div class="om-item${m.span ? ' span-2' : ''}"><div style="text-align:center"><div style="font-size:40px;margin-bottom:4px">${m.emoji}</div><div class="om-label">${m.label}</div></div></div>`
+      ).join('');
+
+      oFeatures.innerHTML = d.features.map(f =>
+        `<div class="of-item"><div class="of-icon">${f.icon}</div><h4>${f.title}</h4><p>${f.desc}</p></div>`
+      ).join('');
+
+      oTech.innerHTML = d.tech.map(t => `<span>${t}</span>`).join('');
+
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeOverlay() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  oClose.addEventListener('click', closeOverlay);
+  oBack.addEventListener('click', closeOverlay);
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) closeOverlay();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) closeOverlay();
+  });
+
+  // Entrance animation
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.card').forEach(el => observer.observe(el));
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20));
+</script>
+</body>
+</html>
