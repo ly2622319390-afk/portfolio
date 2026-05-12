@@ -92,7 +92,7 @@
   }
   .hero-media{
     position:absolute;inset:0;z-index:0;
-    background:url('作品集网站封面底图.JPG') center/cover no-repeat;
+    background:url('optimized/作品集网站封面底图.webp') center/cover no-repeat;
     transform:scale(1.08);will-change:transform;
     filter:saturate(0.85) brightness(0.48) contrast(1.05);
   }
@@ -697,6 +697,18 @@
     opacity:0;transition:opacity 0.5s ease;padding:24px;
   }
   .ai-overlay.active{display:flex;opacity:1}
+  .ai-overlay.loading::before {
+    content:'';position:fixed;inset:0;z-index:9999;
+    background:oklch(0% 0 0 /0.65);
+  }
+  .ai-overlay.loading::after {
+    content:'';position:fixed;top:50%;left:50%;z-index:10000;
+    width:36px;height:36px;margin:-18px 0 0 -18px;
+    border:3px solid oklch(100% 0 0 /0.1);
+    border-top-color:oklch(100% 0 0 /0.8);
+    border-radius:50%;animation:ai-spin 0.7s linear infinite;
+  }
+  @keyframes ai-spin{to{transform:rotate(360deg)}}
   .ai-overlay-inner{
     max-width:700px;width:100%;max-height:90vh;overflow-y:auto;
     background:oklch(12% 0.01 235);border:1px solid oklch(100% 0 0 /0.06);
@@ -798,7 +810,7 @@
   .ai-overlay-inner.static-layout .ai-o-tech{flex-shrink:0;margin-top:8px}
 
   /* Fullscreen static layout — hero background, no popup */
-  .ai-overlay.fullscreen{padding:0;background:#0a0a0f url('assets/hero-silhouette.png') center/cover no-repeat fixed}
+  .ai-overlay.fullscreen{padding:0;background:#0a0a0f}
   .ai-overlay.fullscreen .ai-overlay-inner{
     max-width:100%;max-height:100vh;width:100%;height:100vh;
     border-radius:0;border:none;background:rgba(0,0,0,0.28);backdrop-filter:blur(30px);
@@ -1358,7 +1370,7 @@
   <div class="ai-grid" id="aiGrid">
     <div class="ai-card" data-idx="0" role="button" tabindex="0">
       <div class="ai-pick-well ai-pick-well--mist">
-        <img class="ai-pick-img" src="中药/主界面.png" alt="本草智鉴 APP 主界面" width="600" height="800" loading="lazy" decoding="async">
+        <picture><source srcset="optimized/中药/主界面.webp" type="image/webp"><img class="ai-pick-img" src="中药/主界面.png" alt="本草智鉴 APP 主界面" width="600" height="800" loading="lazy" decoding="async"></picture>
       </div>
       <div class="ai-swatches" aria-hidden="true"><span style="background:#4a7c59"></span><span style="background:#b8d4c4"></span><span style="background:#2d4a38"></span></div>
       <div class="ai-card-body">
@@ -1375,7 +1387,7 @@
     </div>
     <div class="ai-card" data-idx="1" role="button" tabindex="0">
       <div class="ai-pick-well ai-pick-well--dark">
-        <img class="ai-pick-img" src="视频作品/鹅鸭杀AIGC封面.jpg" alt="鹅鸭杀 AIGC 成片" width="1920" height="1080" loading="lazy" decoding="async">
+        <picture><source srcset="optimized/视频作品/鹅鸭杀AIGC封面.webp" type="image/webp"><img class="ai-pick-img" src="视频作品/鹅鸭杀AIGC封面.jpg" alt="鹅鸭杀 AIGC 成片" width="1920" height="1080" loading="lazy" decoding="async"></picture>
       </div>
       <div class="ai-swatches" aria-hidden="true"><span style="background:#3a3a3c"></span><span style="background:#6e6e73"></span><span style="background:#aeaeb2"></span></div>
       <div class="ai-card-body">
@@ -1392,7 +1404,7 @@
     </div>
     <div class="ai-card" data-idx="2" role="button" tabindex="0">
       <div class="ai-pick-well ai-pick-well--blue">
-        <img class="ai-pick-img" src="游戏/封面.png" alt="交互游戏封面" width="600" height="800" loading="lazy" decoding="async">
+        <picture><source srcset="optimized/游戏/封面.webp" type="image/webp"><img class="ai-pick-img" src="游戏/封面.png" alt="交互游戏封面" width="600" height="800" loading="lazy" decoding="async"></picture>
       </div>
       <div class="ai-swatches" aria-hidden="true"><span style="background:#0071e3"></span><span style="background:#64b5f6"></span><span style="background:#c5d8f0"></span></div>
       <div class="ai-card-body">
@@ -1409,7 +1421,7 @@
     </div>
     <div class="ai-card" data-idx="3" role="button" tabindex="0">
       <div class="ai-pick-well ai-pick-well--dark">
-        <img class="ai-pick-img" src="AI对话网站/封面.png" alt="AI 对话网站封面" width="600" height="800" loading="lazy" decoding="async">
+        <picture><source srcset="optimized/AI对话网站/封面.webp" type="image/webp"><img class="ai-pick-img" src="AI对话网站/封面.png" alt="AI 对话网站封面" width="600" height="800" loading="lazy" decoding="async"></picture>
       </div>
       <div class="ai-swatches" aria-hidden="true"><span style="background:#6c5ce7"></span><span style="background:#a78bfa"></span><span style="background:#2d1b69"></span></div>
       <div class="ai-card-body">
@@ -1462,7 +1474,7 @@
         <div class="ops-visual">
           <div class="ops-date">2024.4 — 2024.6</div>
           <div class="ops-img">
-            <img class="ops-img-single" src="运营/从0到1运营团队.jpg" alt="抖音运营数据截图" loading="lazy">
+            <picture><source srcset="optimized/运营/从0到1运营团队.webp" type="image/webp"><img class="ops-img-single" src="运营/从0到1运营团队.jpg" alt="抖音运营数据截图" loading="lazy"></picture>
           </div>
         </div>
         <div class="ops-content">
@@ -1486,7 +1498,7 @@
         <div class="ops-visual">
           <div class="ops-date">2024 — 2025</div>
           <div class="ops-img">
-            <img class="ops-img-single" src="运营/游戏合集.png" alt="游戏合集" loading="lazy">
+            <picture><source srcset="optimized/运营/游戏合集.webp" type="image/webp"><img class="ops-img-single" src="运营/游戏合集.png" alt="游戏合集" loading="lazy"></picture>
           </div>
         </div>
         <div class="ops-content">
@@ -1510,8 +1522,8 @@
           <div class="ops-date">2025.10 — 至今</div>
           <div class="ops-img">
             <div class="ops-gallery" data-current="0">
-              <img class="ops-gallery-slide active" src="运营/小红书图文1.jpg" alt="小红书运营1" loading="lazy">
-              <img class="ops-gallery-slide" src="运营/小红书图文2.jpg" alt="小红书运营2" loading="lazy">
+              <picture><source srcset="optimized/运营/小红书图文1.webp" type="image/webp"><img class="ops-gallery-slide active" src="运营/小红书图文1.jpg" alt="小红书运营1" loading="lazy"></picture>
+              <picture><source srcset="optimized/运营/小红书图文2.webp" type="image/webp"><img class="ops-gallery-slide" src="运营/小红书图文2.jpg" alt="小红书运营2" loading="lazy"></picture>
 
               <div class="ops-gallery-nav">
                 <button class="ops-gallery-btn ops-gallery-prev" aria-label="上一张">‹</button>
@@ -1565,7 +1577,7 @@
   <div class="section-inner">
     <div class="section-header"><span class="section-label">About</span><h2 class="section-title"><span class="line-r"><span class="lr d1">用创意连接世界</span></span></h2></div>
     <div class="about-g">
-      <div class="about-av"><img src="个人照片.jpg" alt="李颖" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius);display:block"></div>
+      <div class="about-av"><picture><source srcset="optimized/个人照片.webp" type="image/webp"><img src="个人照片.jpg" alt="李颖" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius);display:block"></picture></div>
       <div class="about-c">
         <h3><span class="line-r"><span class="lr d2">一名跨界的创造者</span></span></h3>
         <p>我是李颖。从拿起相机剪辑第一条视频开始，到用数据驱动账号增长，再到借助 AI 重构工作流——我始终相信，<strong>技能的边界，才是创新的起点</strong>。</p>
@@ -1713,7 +1725,7 @@
     }else{
       previewEl.classList.add('pv--video');
       const v=document.createElement('video');v.className='pv-video';
-      v.src=pd.video;v.muted=true;v.playsInline=true;v.loop=true;v.preload='auto';
+      v.src=pd.video;v.muted=true;v.playsInline=true;v.loop=true;v.preload='none';
       previewEl.insertBefore(v,previewEl.firstChild);
       v.play().catch(()=>{});
     }
@@ -1841,11 +1853,22 @@
   const aiOMedia = document.getElementById('aiOMedia');
   const aiOFeatures = document.getElementById('aiOFeatures');
   const aiOTech = document.getElementById('aiOTech');
+// Map original image paths to optimized WebP
+const OPT_PREFIX = 'optimized/';
+function optSrc(src) {
+  if (!src) return src;
+  if (/\.(png|jpg|jpeg)$/i.test(src)) {
+    return OPT_PREFIX + src.replace(/\.(png|jpg|jpeg)$/i, '.webp');
+  }
+  return src;
+}
+
 
   document.querySelectorAll('.ai-card[data-idx]').forEach(card => {
     card.addEventListener('click', () => {
       const d = AI_DATA[parseInt(card.dataset.idx)];
       if (!d) return;
+      aiOverlay.classList.add('loading');
       aiOTag.textContent = d.tag;
       aiOTag.style.background = d.tagBg;
       aiOTag.style.color = d.tagColor;
@@ -1870,7 +1893,7 @@
         </div>
         <div class="ai-static-img-wrap">
           <div class="ai-ss-progress"></div>
-          <div class="ai-static-img" style="position:relative">${isVideo?`<video src="${defaultMedia}" controls playsinline autoplay preload="auto"></video>`:`<img src="${defaultMedia}" alt="">`}<button class="ai-ss-nav ai-ss-prev">‹</button><button class="ai-ss-nav ai-ss-next">›</button></div>
+          <div class="ai-static-img" style="position:relative">${isVideo?`<video src="${optSrc(defaultMedia)}" controls playsinline autoplay preload="metadata"></video>`:`<img src="${optSrc(defaultMedia)}" alt="">`}<button class="ai-ss-nav ai-ss-prev">‹</button><button class="ai-ss-nav ai-ss-next">›</button></div>
         </div>
         <div class="ai-static-col">
           <div class="sf-item" data-imgs='${JSON.stringify(f[1].imgs||(f[1].img?[f[1].img]:[]))}' data-idx="0"><div class="sf-icon">${f[1].icon}</div><h4>${f[1].title}</h4><p>${f[1].desc}</p></div>
@@ -1993,7 +2016,7 @@ startAutoRotate();      } else {
       if (hasImages) {
         aiOMedia.className = 'ai-slideshow';
         aiOMedia.innerHTML = `<div class="ai-ss-progress">${d.media.map((_,i) => `<div class="ai-ss-seg" data-idx="${i}"><div class="ai-ss-fill"></div></div>`).join('')}</div>
-        <div class="ai-ss-view">${d.media.map((m,i) => `<div class="ai-ss-slide${i===0?' active':''}" data-idx="${i}" data-caption="${m.label.replace(/"/g,'&quot;')}">${m.src.endsWith('.mp4')?`<video src="${m.src}" muted playsinline preload="metadata"></video>`:`<img src="${m.src}" alt="${m.label}">`}</div>`).join('')}</div>
+        <div class="ai-ss-view">${d.media.map((m,i) => `<div class="ai-ss-slide${i===0?' active':''}" data-idx="${i}" data-caption="${m.label.replace(/"/g,'&quot;')}">${m.src.endsWith('.mp4')?`<video src="${optSrc(m.src)}" muted playsinline preload="metadata"></video>`:`<img src="${optSrc(m.src)}" alt="${m.label}">`}</div>`).join('')}</div>
         <div class="ai-ss-nav ai-ss-prev">‹</div>
         <div class="ai-ss-nav ai-ss-next">›</div>
         <div class="ai-ss-caption"><div class="ai-ss-label">${d.media[0].label}</div><div class="ai-ss-ctr"><span class="ai-ss-cur">1</span> / <span class="ai-ss-tot">${d.media.length}</span></div></div>`;
@@ -2010,6 +2033,7 @@ startAutoRotate();      } else {
         `<div class="of-item"><div class="of-icon">${f.icon}</div><h4>${f.title}</h4><p>${f.desc}</p></div>`
       ).join('');
       aiOTech.innerHTML = d.tech.map(t => `<span>${t}</span>`).join('');
+      requestAnimationFrame(() => requestAnimationFrame(() => aiOverlay.classList.remove('loading')));
       aiOverlay.classList.add('active');
       document.body.style.overflow = 'hidden';
     });
@@ -2022,6 +2046,7 @@ startAutoRotate();      } else {
 
   function closeAIOverlay() {
     aiOverlay.classList.remove('active');
+    aiOverlay.classList.remove('loading');
     aiOverlay.classList.remove('fullscreen');
     aiOverlayInner.classList.remove('static-layout');
     aiOFeatures.style.display = '';
