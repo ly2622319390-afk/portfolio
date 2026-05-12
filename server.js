@@ -109,7 +109,9 @@ const server = http.createServer((req, res) => {
   }
 
   // Static files
-  let filePath = path.join(ROOT, pathname === '/' ? 'portfolio.html' : pathname);
+  let decodedPath = decodeURIComponent(pathname);
+  let relativePath = decodedPath === '/' ? 'index.html' : decodedPath.slice(1);
+  let filePath = path.join(ROOT, relativePath);
   serveStatic(res, filePath);
 });
 

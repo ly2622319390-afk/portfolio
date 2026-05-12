@@ -595,6 +595,7 @@
   .vp-info p{font-size:14px;color:oklch(100% 0 0 /0.55);line-height:1.6;font-weight:300}
   .vclose{position:absolute;top:12px;right:12px;z-index:10;background:oklch(0% 0 0 /0.5);border:none;color:oklch(100% 0 0 /0.6);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all 0.3s;backdrop-filter:blur(8px)}
   .vclose:hover{background:oklch(0% 0 0 /0.7);color:oklch(100% 0 0)}
+  .vp-hint{font-size:12px;color:oklch(100% 0 0 /0.45);text-align:center;padding:8px 16px 0;letter-spacing:0.02em}
 
   /* ===== AI — product strip (white / Apple-like) ===== */
   .ai-section{
@@ -785,12 +786,19 @@
   .ai-static-col .sf-item.active p{opacity:1}
   .ai-static-img{flex-shrink:0;height:45vh;max-height:400px;border-radius:10px;overflow:hidden;box-shadow:0 8px 40px oklch(0% 0 0 /0.4);position:relative;background:oklch(0% 0 0 /0.15)}
   .ai-static-img img,.ai-static-img video{height:100%;width:auto;display:block;transition:opacity 0.4s ease,transform 0.4s ease;border-radius:inherit;object-fit:contain}
+  .ai-img-ctr{position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,0.55);color:#fff;font-size:13px;padding:3px 10px;border-radius:20px;font-variant-numeric:tabular-nums;pointer-events:none;z-index:2;backdrop-filter:blur(4px)}
+  .ai-static-img-wrap{position:relative;display:flex;flex-direction:column;align-items:center;flex:1;min-width:0;max-width:100%}
+  .ai-static-img-wrap .ai-ss-progress{width:100%;padding:0 0 8px}
+  .ai-static-img-wrap .ai-ss-nav{opacity:0;transition:opacity 0.3s;width:44px;height:44px;font-size:26px;background:oklch(0% 0 0 /0.35);color:oklch(100% 0 0 /0.7)}
+  .ai-static-img-wrap.hover .ai-ss-nav{opacity:1}
+  .ai-static-img-wrap .ai-static-img{width:100%;max-width:100%;display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .ai-static-img-wrap .ai-static-img img,.ai-static-img-wrap .ai-static-img video{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;display:block;flex-shrink:0}
   .ai-overlay-inner.static-layout .ai-o-desc{flex-shrink:0;margin-bottom:8px}
   .ai-overlay-inner.static-layout .ai-o-tag{margin-bottom:8px}
   .ai-overlay-inner.static-layout .ai-o-tech{flex-shrink:0;margin-top:8px}
 
   /* Fullscreen static layout — hero background, no popup */
-  .ai-overlay.fullscreen{padding:0;background:url('assets/hero-silhouette.png') center/cover no-repeat fixed}
+  .ai-overlay.fullscreen{padding:0;background:#0a0a0f url('assets/hero-silhouette.png') center/cover no-repeat fixed}
   .ai-overlay.fullscreen .ai-overlay-inner{
     max-width:100%;max-height:100vh;width:100%;height:100vh;
     border-radius:0;border:none;background:rgba(0,0,0,0.28);backdrop-filter:blur(30px);
@@ -1401,7 +1409,7 @@
     </div>
     <div class="ai-card" data-idx="3" role="button" tabindex="0">
       <div class="ai-pick-well ai-pick-well--dark">
-        <img class="ai-pick-img" src="AI对话网站/封面图.png" alt="AI 对话网站封面" width="600" height="800" loading="lazy" decoding="async">
+        <img class="ai-pick-img" src="AI对话网站/封面.png" alt="AI 对话网站封面" width="600" height="800" loading="lazy" decoding="async">
       </div>
       <div class="ai-swatches" aria-hidden="true"><span style="background:#6c5ce7"></span><span style="background:#a78bfa"></span><span style="background:#2d1b69"></span></div>
       <div class="ai-card-body">
@@ -1595,6 +1603,7 @@
 <div class="vover" id="vover">
   <div class="vplayer">
     <button class="vclose" id="vclose">✕</button>
+    <div class="vp-hint">🔊 视频含声音，请注意调节音量</div>
     <video id="vVideo" controls preload="metadata" playsinline></video>
     <div class="vp-info">
       <div class="vp-tag" id="vpTag"></div>
@@ -1808,19 +1817,19 @@
       ],
       tech:['JavaScript','HTML5 Canvas','Claude AI','Midjourney']},
     {tag:'Chat',title:'AI 对话 · 角色引擎',tagColor:'oklch(68% 0.14 280)',tagBg:'oklch(68% 0.14 280 /0.15)',
-      desc:'用 Claude Code Vibe Coding 全栈构建的 AI 角色对话平台。不止于「你问我答」——通过精细化角色设定、关系网络配置、上下文触发生图、现实好友聊天记录导入与人格复刻，让 AI 从「对话工具」进化为「有性格的伙伴」。',
+      staticLayout:true,
+      desc:'一个人 + Claude Code Vibe Coding 从创意到落地的全栈 AI 角色对话平台。不止于「你问我答」——通过精细化角色设定、关系网络配置、上下文触发生图、现实好友聊天记录导入与人格复刻，让 AI 从「对话工具」进化为「有性格的伙伴」。',
       media:[
-        {src:'AI对话网站/封面图.png',label:'网站封面'},
-        {src:'AI对话网站/人物对话生图.png',label:'角色对话生图'},
-        {src:'AI对话网站/复刻现实朋友对话1.png',label:'复刻朋友对话'},
-        {src:'AI对话网站/特殊人设1.png',label:'特殊人设1'},
-        {src:'AI对话网站/特殊人设2.png',label:'特殊人设2'},
+        {src:'AI对话网站/封面.png',label:'网站封面',span:2},
+        {src:'AI对话网站/AI角色对话1.png',label:'角色对话'},
+        {src:'AI对话网站/特殊人设1.png',label:'特殊人设'},
+        {src:'AI对话网站/复刻现实朋友对话1.png',label:'人格复刻'},
       ],
       features:[
-        {icon:'🎭',title:'精细化角色设定',desc:'性格标签、说话风格、语气口癖、行为边界——结构化角色卡，不再是一段长 prompt。'},
-        {icon:'💞',title:'关系网络配置',desc:'朋友、恋人、同僚……定义角色之间的关系位置与相处模式，对话更有「人情味」。'},
-        {icon:'🖼️',title:'上下文触发生图',desc:'AI 根据对话氛围自动发送配图——聊美食发食物、看夕阳发风景，像真人一样分享生活。'},
-        {icon:'👤',title:'现实朋友人格复刻',desc:'导入真实聊天记录，AI 自动学习对方的说话方式、回复习惯、语气特征，重建一个「数字分身」。'},
+        {icon:'💬',title:'AI 角色对话引擎',desc:'输入角色名，AI 自动联网检索背景、补全设定、生成结构化角色卡。性格标签、说话风格、语气口癖、行为边界精细化设定，即输即聊。', imgs:['AI对话网站/AI角色对话1.png','AI对话网站/AI角色对话2.png']},
+        {icon:'🎭',title:'特殊人设关系网络',desc:'在通用设定之上定义私人关系——称呼方式、关系定位、共同记忆、相处模式。让角色从「大众版」进化为「属于你的版本」。', imgs:['AI对话网站/特殊人设1.png','AI对话网站/特殊人设2.png']},
+        {icon:'🖼️',title:'上下文智能触发生图',desc:'AI 根据对话氛围自动发送配图，聊美食发食物、看夕阳发风景，像真人一样分享生活的互动体验。触发频率与风格可配置。', imgs:['AI对话网站/随机生图机制1.png','AI对话网站/随机生图机制2.png']},
+        {icon:'👤',title:'现实好友人格复刻',desc:'导入聊天记录，AI 自动清洗数据、提取语气特征。重建语言习惯+关系位置+互动感觉的三维人格模型，让 AI 如真人般对话。', imgs:['AI对话网站/复刻现实朋友对话1.png','AI对话网站/复刻现实朋友对话2.png']},
       ],
       tech:['Claude Code','Vibe Coding','HTML/CSS/JS','角色卡系统','AI API']},
   ];
@@ -1856,37 +1865,130 @@
         const f = d.features;
         aiOMedia.innerHTML = `
         <div class="ai-static-col">
-          <div class="sf-item" data-img="${f[0].img||''}"><div class="sf-icon">${f[0].icon}</div><h4>${f[0].title}</h4><p>${f[0].desc}</p></div>
-          <div class="sf-item" data-img="${f[2].img||''}"><div class="sf-icon">${f[2].icon}</div><h4>${f[2].title}</h4><p>${f[2].desc}</p></div>
+          <div class="sf-item" data-imgs='${JSON.stringify(f[0].imgs||(f[0].img?[f[0].img]:[]))}' data-idx="0"><div class="sf-icon">${f[0].icon}</div><h4>${f[0].title}</h4><p>${f[0].desc}</p></div>
+          <div class="sf-item" data-imgs='${JSON.stringify(f[2].imgs||(f[2].img?[f[2].img]:[]))}' data-idx="0"><div class="sf-icon">${f[2].icon}</div><h4>${f[2].title}</h4><p>${f[2].desc}</p></div>
         </div>
-        <div class="ai-static-img">${isVideo?`<video src="${defaultMedia}" controls playsinline autoplay preload="auto"></video>`:`<img src="${defaultMedia}" alt="">`}</div>
+        <div class="ai-static-img-wrap">
+          <div class="ai-ss-progress"></div>
+          <div class="ai-static-img" style="position:relative">${isVideo?`<video src="${defaultMedia}" controls playsinline autoplay preload="auto"></video>`:`<img src="${defaultMedia}" alt="">`}<button class="ai-ss-nav ai-ss-prev">‹</button><button class="ai-ss-nav ai-ss-next">›</button></div>
+        </div>
         <div class="ai-static-col">
-          <div class="sf-item" data-img="${f[1].img||''}"><div class="sf-icon">${f[1].icon}</div><h4>${f[1].title}</h4><p>${f[1].desc}</p></div>
-          <div class="sf-item" data-img="${f[3].img||''}"><div class="sf-icon">${f[3].icon}</div><h4>${f[3].title}</h4><p>${f[3].desc}</p></div>
+          <div class="sf-item" data-imgs='${JSON.stringify(f[1].imgs||(f[1].img?[f[1].img]:[]))}' data-idx="0"><div class="sf-icon">${f[1].icon}</div><h4>${f[1].title}</h4><p>${f[1].desc}</p></div>
+          <div class="sf-item" data-imgs='${JSON.stringify(f[3].imgs||(f[3].img?[f[3].img]:[]))}' data-idx="0"><div class="sf-icon">${f[3].icon}</div><h4>${f[3].title}</h4><p>${f[3].desc}</p></div>
         </div>`;
-        const items = aiOMedia.querySelectorAll('.sf-item');
-        const centerEl = aiOMedia.querySelector('.ai-static-img');
-        let switching = false;
-        items.forEach(item => {
-          item.addEventListener('click', () => {
-            if (switching || isVideo) return;
-            switching = true;
-            items.forEach(sf => sf.classList.remove('active'));
-            item.classList.add('active');
-            const newSrc = item.dataset.img;
-            const imgEl = centerEl.querySelector('img');
-            if (newSrc && imgEl && imgEl.src.indexOf(newSrc) === -1) {
-              imgEl.style.opacity = '0';
-              imgEl.style.transform = 'scale(0.92)';
-              setTimeout(() => {
-                imgEl.src = newSrc;
-                const done = () => { imgEl.style.opacity = '1'; imgEl.style.transform = 'scale(1)'; switching = false; };
-                if (imgEl.complete) { done(); } else { imgEl.onload = done; imgEl.onerror = () => { switching = false; }; }
-              }, 200);
-            } else { switching = false; }
-          });
-        });
-      } else {
+                // --- image rotation state ---
+let switching = false;
+let autoTimer;
+let paused = false;
+const items = aiOMedia.querySelectorAll(".sf-item");
+const centerEl = aiOMedia.querySelector(".ai-static-img");
+const imgEl = centerEl.querySelector('img');
+const wrap = aiOMedia.querySelector('.ai-static-img-wrap');
+const progressEl = wrap.querySelector('.ai-ss-progress');
+const prevBtn = wrap.querySelector('.ai-ss-prev');
+const nextBtn = wrap.querySelector('.ai-ss-next');
+
+function buildProgress(count) {
+  progressEl.innerHTML = '';
+  for (let i = 0; i < count; i++) {
+    const seg = document.createElement('div');
+    seg.className = 'ai-ss-seg' + (i === 0 ? ' active' : '');
+    seg.innerHTML = '<div class="ai-ss-fill"></div>';
+    progressEl.appendChild(seg);
+  }
+}
+
+function setActiveFeature(item) {
+  items.forEach(function(sf) { sf.classList.remove('active'); });
+  item.classList.add('active');
+  const imgs = JSON.parse(item.dataset.imgs || '[]');
+  const idx = parseInt(item.dataset.idx || '0');
+  const count = imgs.length;
+  buildProgress(count);
+  return { imgs: imgs, count: count, idx: idx };
+}
+
+function switchImage(src, cb) {
+  if (!imgEl || !src || imgEl.src.indexOf(src) !== -1) { if(cb) cb(); return; }
+  imgEl.style.opacity = '0';
+  imgEl.style.transform = 'scale(0.92)';
+  setTimeout(function() {
+    imgEl.src = src;
+    var done = function() { imgEl.style.opacity = '1'; imgEl.style.transform = 'scale(1)'; if(cb) cb(); };
+    if (imgEl.complete) done(); else { imgEl.onload = done; imgEl.onerror = function() { if(cb) cb(); }; }
+  }, 200);
+}
+
+function goToIdx(item, idx) {
+  if (switching || isVideo) return;
+  switching = true;
+  var imgs = JSON.parse(item.dataset.imgs || '[]');
+  var count = imgs.length;
+  if (!count || idx < 0 || idx >= count) { switching = false; return; }
+  item.dataset.idx = idx;
+  items.forEach(function(sf) { sf.classList.remove('active'); });
+  item.classList.add('active');
+  var src = imgs[idx];
+  var segs = progressEl.querySelectorAll('.ai-ss-seg');
+  segs.forEach(function(s, i) {
+    s.classList.toggle('active', i === idx);
+    s.classList.toggle('done', i < idx);
+    var fill = s.querySelector('.ai-ss-fill');
+    if (fill) fill.style.width = i < idx ? '100%' : (i === idx ? '0%' : '0%');
+  });
+  var ctr = aiOMedia.querySelector('.ai-img-ctr');
+  if (!ctr && count > 1) { ctr = document.createElement('div'); ctr.className = 'ai-img-ctr'; centerEl.appendChild(ctr); }
+  if (ctr) ctr.textContent = count > 1 ? (idx + 1) + '/' + count : '';
+  switchImage(src, function() { switching = false; });
+}
+
+function nextImg() {
+  var active = aiOMedia.querySelector('.sf-item.active');
+  if (!active) { if(items[0]) { items[0].classList.add('active'); goToIdx(items[0], 0); } return; }
+  var imgs = JSON.parse(active.dataset.imgs || '[]');
+  var cur = parseInt(active.dataset.idx || '0');
+  goToIdx(active, (cur + 1) % imgs.length);
+}
+
+function prevImg() {
+  var active = aiOMedia.querySelector('.sf-item.active');
+  if (!active) { if(items[0]) { items[0].classList.add('active'); goToIdx(items[0], 0); } return; }
+  var imgs = JSON.parse(active.dataset.imgs || '[]');
+  var cur = parseInt(active.dataset.idx || '0');
+  goToIdx(active, (cur - 1 + imgs.length) % imgs.length);
+}
+
+items.forEach(function(item) {
+  item.addEventListener('click', function() {
+    if (switching || isVideo) return;
+    var wasActive = item.classList.contains('active');
+    if (wasActive) { nextImg(); }
+    else {
+      setActiveFeature(item);
+      goToIdx(item, 0);
+    }
+  });
+});
+
+prevBtn.addEventListener('click', function(e) { e.stopPropagation(); prevImg(); resetAutoRotate(); });
+nextBtn.addEventListener('click', function(e) { e.stopPropagation(); nextImg(); resetAutoRotate(); });
+centerEl.addEventListener('click', function(e) { e.stopPropagation(); if (!paused) nextImg(); resetAutoRotate(); });
+
+wrap.addEventListener('mouseenter', function() { paused = true; clearInterval(autoTimer); wrap.classList.add('hover'); });
+wrap.addEventListener('mouseleave', function() { paused = false; startAutoRotate(); wrap.classList.remove('hover'); });
+
+function startAutoRotate() {
+  clearInterval(autoTimer);
+  if (paused) return;
+  autoTimer = setInterval(function() {
+    if (!paused) nextImg();
+  }, 3000);
+}
+
+function resetAutoRotate() { startAutoRotate(); }
+
+if (items.length) { setActiveFeature(items[0]); goToIdx(items[0], 0); }
+startAutoRotate();      } else {
       const hasImages = d.media.some(m => m.src);
       if (hasImages) {
         aiOMedia.className = 'ai-slideshow';
