@@ -1972,7 +1972,7 @@
       ],
       tech:['微信小程序','Node.js','PostgreSQL','Redis','LLM API','TDesign']},
     {tag:'桌面软件', title:'灵语 · AI 语音输入助手', tagColor:'oklch(68% 0.14 210)', tagBg:'oklch(68% 0.14 210 /0.12)',
-      staticLayout:true, staticLayoutLeft:2,
+      staticLayout:true,
       desc:'灵语是一款 AI 驱动的语音输入桌面软件，覆盖办公、聊天、创作三大核心场景。内置智能词库管理系统与完整历史记录回溯，让说话成为最高效的输入方式——想到什么，说出来就好。无需键盘，不打断思路。',
       media:[
         {src:'灵语-语音输入/办公演示.jpg', label:'办公模块 · AI 语音转文字', span:2},
@@ -2029,7 +2029,7 @@ function optSrc(src) {
         const isVideo = d.staticVideo;
         const defaultMedia = d.media[0].src;
         const f = d.features;
-        const leftN = d.staticLayoutLeft || 3;
+        const leftN = d.staticLayoutLeft || (f.length <= 5 ? 2 : 3);
         const leftF = f.slice(0, leftN);
         const rightF = f.slice(leftN);
         function sfItem(item) {
