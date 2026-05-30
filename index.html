@@ -626,10 +626,18 @@
   .ai-strip-link:hover{color:var(--apple-blue-hover)}
   .ai-strip-link .chev{font-size:1.15em;font-weight:400;line-height:1;translate:0 1px}
 
-  .ai-grid{
-    display:grid;grid-template-columns:repeat(4,1fr);gap:28px 18px;
-    max-width:1280px;margin:0 auto;padding:0 12px;position:relative;z-index:1;
+  /* ===== AI Carousel ===== */
+  .ai-carousel{
+    overflow:hidden;max-width:1280px;margin:0 auto;position:relative;z-index:1;
+    user-select:none;-webkit-user-select:none;
   }
+  .ai-carousel-track{
+    display:flex;gap:18px;padding:0 12px;
+    transition:transform 0.55s cubic-bezier(0.16,1,0.3,1);
+    will-change:transform;cursor:grab;
+  }
+  .ai-carousel-track.dragging{cursor:grabbing;transition:none!important}
+  .ai-carousel-track .ai-card{flex-shrink:0;}
   .ai-card{
     position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;
     cursor:pointer;background:transparent;border:none;border-radius:0;overflow:visible;
@@ -688,6 +696,75 @@
   .ai-link-text{font-size:13px;font-weight:400;color:var(--apple-blue);letter-spacing:-0.01em}
   .ai-hint{font-size:11px;color:#aeaeb2;margin-top:8px;font-weight:400;letter-spacing:0.02em}
   .ai-card:focus-visible{outline:2px solid #0071e3;outline-offset:6px;border-radius:4px}
+
+  /* Placeholder card — elegant empty state */
+  .ai-pick-well--placeholder{
+    background:var(--ph-gradient);
+    position:relative;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .ai-ph-content{
+    position:relative;z-index:2;
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+    text-align:center;
+  }
+  .ai-ph-icon{
+    font-size:34px;opacity:0.15;line-height:1;
+    transition:transform 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.5s ease;
+  }
+  .ai-card.visible:hover .ai-ph-icon{transform:scale(1.12);opacity:0.22}
+  .ai-ph-label{
+    font-size:12px;font-weight:500;letter-spacing:0.08em;
+    color:rgba(0,0,0,0.2);text-transform:uppercase;
+  }
+  .ai-ph-dots{display:flex;gap:5px}
+  .ai-ph-dots span{
+    width:4px;height:4px;border-radius:50%;background:rgba(0,0,0,0.12);
+    animation:ph-dot-pulse 2.4s ease-in-out infinite;
+  }
+  .ai-ph-dots span:nth-child(2){animation-delay:0.4s}
+  .ai-ph-dots span:nth-child(3){animation-delay:0.8s}
+  @keyframes ph-dot-pulse{
+    0%,100%{opacity:0.3;transform:scale(1)}
+    50%{opacity:0.8;transform:scale(1.35)}
+  }
+  .ai-ph-orbs{position:absolute;inset:0;pointer-events:none;z-index:1}
+  .ai-ph-orbs span{
+    position:absolute;border-radius:50%;
+    width:60%;height:60%;top:-20%;right:-10%;
+    background:var(--ph-accent);
+  }
+  .ai-ph-orbs span:last-child{
+    width:40%;height:40%;bottom:-10%;left:-10%;top:auto;right:auto;
+  }
+
+  /* Carousel controls in strip */
+  .ai-carousel-ctrl{display:flex;align-items:center;gap:10px;flex-shrink:0}
+  .ai-ctrl-btn{
+    width:32px;height:32px;border-radius:50%;
+    border:1px solid #d2d2d7;background:transparent;
+    color:#424245;font-size:20px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:all .25s ease;font-family:var(--font);
+    line-height:1;padding:0 0 2px;
+  }
+  .ai-ctrl-btn:hover{background:#f5f5f7;border-color:#aeaeb2;color:#1d1d1f}
+  .ai-ctrl-btn:active{transform:scale(0.9)}
+  .ai-ctrl-btn:disabled{opacity:0.2;cursor:default;pointer-events:none}
+  .ai-ctrl-dots{display:flex;gap:5px}
+  .ai-ctrl-dot{
+    width:7px;height:7px;border-radius:50%;border:none;
+    background:#d2d2d7;cursor:pointer;padding:0;
+    transition:all .3s ease;
+  }
+  .ai-ctrl-dot.active{background:var(--apple-blue);transform:scale(1.35)}
+  .ai-ctrl-dot:hover{background:#aeaeb2}
+
+  @media(max-width:640px){
+    .ai-carousel-ctrl{gap:8px}
+    .ai-ctrl-btn{width:28px;height:28px;font-size:17px}
+    .ai-ctrl-dot{width:6px;height:6px}
+  }
 
   /* AI Overlay */
   .ai-overlay{
@@ -785,18 +862,18 @@
 
   /* Static app layout — single screen centering phone + features */
   .ai-overlay-inner.static-layout{overflow-y:hidden;display:flex;flex-direction:column}
-  .ai-static-main{display:flex;align-items:center;justify-content:center;gap:20px;flex:1;min-height:0;padding:4px 0}
-  .ai-static-col{display:flex;flex-direction:column;gap:12px;flex:1;max-width:185px}
-  .ai-static-col .sf-item{cursor:pointer;padding:18px 14px;border:1px solid oklch(100% 0 0 /0.08);border-radius:10px;text-align:center;transition:background 0.2s ease,border-color 0.2s ease;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .ai-static-main{display:flex;align-items:center;justify-content:center;gap:12px;flex:1;min-height:0;padding:4px 0}
+  .ai-static-col{display:flex;flex-direction:column;gap:10px;flex:1;max-width:260px}
+  .ai-static-col .sf-item{cursor:pointer;padding:12px 14px;border:1px solid oklch(100% 0 0 /0.08);border-radius:10px;text-align:center;transition:background 0.2s ease,border-color 0.2s ease;display:flex;flex-direction:column;align-items:center;justify-content:center}
   .ai-static-col .sf-item:hover{background:oklch(100% 0 0 /0.04)}
   .ai-static-col .sf-item.active{background:oklch(100% 0 0 /0.1);border-color:oklch(100% 0 0 /0.2)}
-  .ai-static-col .sf-item .sf-icon{font-size:28px;margin-bottom:8px;transition:opacity 0.2s ease}
-  .ai-static-col .sf-item h4{font-size:17px;font-weight:700;color:oklch(100% 0 0 /0.96);margin-bottom:8px;letter-spacing:0.02em;transition:opacity 0.2s ease}
-  .ai-static-col .sf-item p{font-size:13px;color:oklch(100% 0 0 /0.6);line-height:1.7;font-weight:300;transition:opacity 0.2s ease}
+  .ai-static-col .sf-item .sf-icon{font-size:24px;margin-bottom:5px;transition:opacity 0.2s ease}
+  .ai-static-col .sf-item h4{font-size:15px;font-weight:700;color:oklch(100% 0 0 /0.96);margin-bottom:5px;letter-spacing:0.02em;transition:opacity 0.2s ease}
+  .ai-static-col .sf-item p{font-size:12px;color:oklch(100% 0 0 /0.6);line-height:1.55;font-weight:300;transition:opacity 0.2s ease}
   .ai-static-col .sf-item.active .sf-icon,
   .ai-static-col .sf-item.active h4,
   .ai-static-col .sf-item.active p{opacity:1}
-  .ai-static-img{flex-shrink:0;height:45vh;max-height:400px;border-radius:10px;overflow:hidden;box-shadow:0 8px 40px oklch(0% 0 0 /0.4);position:relative;background:oklch(0% 0 0 /0.15)}
+  .ai-static-img{flex-shrink:0;height:45vh;max-height:400px;border-radius:10px;overflow:hidden;box-shadow:0 8px 40px oklch(0% 0 0 /0.4);position:relative;background:radial-gradient(ellipse at center, oklch(20% 0.02 var(--hue,235) /0.5), oklch(8% 0.01 235 /0.9))}
   .ai-static-img img,.ai-static-img video{height:100%;width:auto;display:block;transition:opacity 0.4s ease,transform 0.4s ease;border-radius:inherit;object-fit:contain}
   .ai-img-ctr{position:absolute;bottom:12px;right:12px;background:rgba(0,0,0,0.55);color:#fff;font-size:13px;padding:3px 10px;border-radius:20px;font-variant-numeric:tabular-nums;pointer-events:none;z-index:2;backdrop-filter:blur(4px)}
   .ai-static-img-wrap{position:relative;display:flex;flex-direction:column;align-items:center;flex:1;min-width:0;max-width:100%}
@@ -805,33 +882,33 @@
   .ai-static-img-wrap.hover .ai-ss-nav{opacity:1}
   .ai-static-img-wrap .ai-static-img{width:100%;max-width:100%;display:flex;align-items:center;justify-content:center;cursor:pointer}
   .ai-static-img-wrap .ai-static-img img,.ai-static-img-wrap .ai-static-img video{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;display:block;flex-shrink:0}
-  .ai-overlay-inner.static-layout .ai-o-desc{flex-shrink:0;margin-bottom:8px}
-  .ai-overlay-inner.static-layout .ai-o-tag{margin-bottom:8px}
-  .ai-overlay-inner.static-layout .ai-o-tech{flex-shrink:0;margin-top:8px}
+  .ai-overlay-inner.static-layout .ai-o-desc{flex-shrink:0;margin-bottom:6px;max-width:75ch}
+  .ai-overlay-inner.static-layout .ai-o-tag{margin-bottom:6px}
+  .ai-overlay-inner.static-layout .ai-o-tech{flex-shrink:0;margin-top:6px}
 
   /* Fullscreen static layout — hero background, no popup */
   .ai-overlay.fullscreen{padding:0;background:#0a0a0f}
   .ai-overlay.fullscreen .ai-overlay-inner{
     max-width:100%;max-height:100vh;width:100%;height:100vh;
     border-radius:0;border:none;background:rgba(0,0,0,0.28);backdrop-filter:blur(30px);
-    padding:24px 56px;transform:none;overflow-y:hidden;
+    padding:20px 48px;transform:none;overflow-y:hidden;
     display:flex;flex-direction:column;
   }
   .ai-overlay.fullscreen.active .ai-overlay-inner{transform:none}
   .ai-overlay.fullscreen .ai-o-close{display:none}
-  .ai-overlay.fullscreen .ai-o-tag{font-size:13px;padding:5px 14px;margin-bottom:10px}
-  .ai-overlay.fullscreen h2{font-size:clamp(28px,3vw,40px);margin-bottom:6px}
-  .ai-overlay.fullscreen .ai-o-desc{font-size:clamp(15px,1.3vw,18px);margin-bottom:8px}
-  .ai-overlay.fullscreen .ai-static-main{gap:clamp(16px,2.5vw,36px)}
-  .ai-overlay.fullscreen .ai-static-col{max-width:clamp(180px,16vw,260px);gap:clamp(10px,1.2vw,18px)}
-  .ai-overlay.fullscreen .ai-static-col .sf-item{padding:clamp(18px,2vw,28px) clamp(14px,1.8vw,24px);border-radius:12px}
-  .ai-overlay.fullscreen .ai-static-col .sf-item .sf-icon{font-size:clamp(28px,3vw,42px);margin-bottom:clamp(6px,0.6vw,10px)}
-  .ai-overlay.fullscreen .ai-static-col .sf-item h4{font-size:clamp(18px,1.6vw,24px);font-weight:700;margin-bottom:clamp(8px,0.8vw,14px);letter-spacing:0.02em}
-  .ai-overlay.fullscreen .ai-static-col .sf-item p{font-size:clamp(14px,1.1vw,17px);line-height:1.7}
-  .ai-overlay.fullscreen .ai-static-img{height:55vh;max-height:65vh;border-radius:14px}
-  .ai-overlay.fullscreen .ai-o-tech{gap:8px;margin-top:10px;justify-content:center}
+  .ai-overlay.fullscreen .ai-o-tag{font-size:13px;padding:5px 14px;margin-bottom:8px}
+  .ai-overlay.fullscreen h2{font-size:clamp(24px,2.8vw,36px);margin-bottom:4px}
+  .ai-overlay.fullscreen .ai-o-desc{font-size:clamp(14px,1.2vw,17px);margin-bottom:6px}
+  .ai-overlay.fullscreen .ai-static-main{gap:clamp(10px,1.5vw,24px)}
+  .ai-overlay.fullscreen .ai-static-col{max-width:clamp(200px,20vw,300px);gap:clamp(8px,1vw,14px)}
+  .ai-overlay.fullscreen .ai-static-col .sf-item{padding:clamp(12px,1.4vw,20px) clamp(12px,1.3vw,18px);border-radius:12px}
+  .ai-overlay.fullscreen .ai-static-col .sf-item .sf-icon{font-size:clamp(22px,2.5vw,36px);margin-bottom:clamp(4px,0.4vw,7px)}
+  .ai-overlay.fullscreen .ai-static-col .sf-item h4{font-size:clamp(14px,1.3vw,19px);font-weight:700;margin-bottom:clamp(4px,0.4vw,7px);letter-spacing:0.02em}
+  .ai-overlay.fullscreen .ai-static-col .sf-item p{font-size:clamp(12px,1vw,15px);line-height:1.55}
+  .ai-overlay.fullscreen .ai-static-img{height:50vh;max-height:60vh;border-radius:14px}
+  .ai-overlay.fullscreen .ai-o-tech{gap:8px;margin-top:8px;justify-content:center}
   .ai-overlay.fullscreen .ai-o-tech span{font-size:13px;padding:6px 16px}
-  .ai-overlay.fullscreen .ai-o-back{font-size:14px;padding:10px 24px;margin-top:14px;align-self:center}
+  .ai-overlay.fullscreen .ai-o-back{font-size:14px;padding:10px 24px;margin-top:12px;align-self:center}
 
   .ai-o-tech{display:flex;flex-wrap:wrap;gap:6px}
   .ai-o-tech span{
@@ -858,10 +935,6 @@
   .ai-lb-close{position:absolute;top:24px;right:24px;width:40px;height:40px;border-radius:50%;border:1px solid oklch(100% 0 0 /0.15);background:oklch(100% 0 0 /0.06);color:oklch(100% 0 0 /0.6);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.3s;font-family:var(--font)}
   .ai-lb-close:hover{background:oklch(100% 0 0 /0.08);color:oklch(100% 0 0)}
 
-  .ai-card:nth-child(2){transition-delay:0.08s}
-  .ai-card:nth-child(3){transition-delay:0.16s}
-  .ai-card:nth-child(4){transition-delay:0.24s}
-
   /* ===== Stats ===== */
   .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
   .stat{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:40px 20px;text-align:center;transition:all 0.35s var(--ease)}
@@ -883,12 +956,6 @@
   .about-c strong{color:var(--text);font-weight:500}
 
   /* ===== Contact ===== */
-  .contact-g{display:grid;grid-template-columns:1fr 1fr;gap:48px}
-  .contact-form{display:flex;flex-direction:column;gap:10px}
-  .contact-form input,.contact-form textarea{padding:14px 18px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:15px;font-family:var(--font);outline:none;transition:border-color 0.3s}
-  .contact-form input:focus,.contact-form textarea:focus{border-color:var(--accent)}
-  .contact-form input::placeholder,.contact-form textarea::placeholder{color:var(--text-tertiary)}
-  .contact-form textarea{resize:vertical;min-height:90px}
   .contact-info{display:flex;flex-direction:column;gap:16px}
   .contact-row{display:flex;align-items:center;gap:14px;font-size:15px;color:var(--text-secondary)}
   .contact-row .ci{width:42px;height:42px;border-radius:var(--radius-sm);background:var(--bg-alt);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
@@ -1163,7 +1230,6 @@
     .grid-4{grid-template-columns:1fr 1fr}
     .about-g{grid-template-columns:1fr;gap:32px}
     .about-av{max-width:180px}
-    .contact-g{grid-template-columns:1fr}
     .card:nth-child(2),.card:nth-child(3),.card:nth-child(4){margin-top:0}
     .ps{padding:80px 20px 40px}
     .planet.ring::before{display:none}
@@ -1173,7 +1239,6 @@
     .vplayer{width:92vw}
     .vp-info{padding:14px 18px 18px}
     .vp-info h3{font-size:17px}
-    .ai-grid{grid-template-columns:repeat(2,1fr);gap:24px 14px}
     .ai-pick-well{max-height:380px}
     .ai-section{padding:48px 16px 64px}
   }
@@ -1190,7 +1255,6 @@
     .p-card{width:140px;padding:8px 10px}
     .p-card p{display:none}
     .p-card h4{font-size:12px}
-    .ai-grid{grid-template-columns:1fr}
     .ai-pick-well{max-height:420px}
     .ai-strip{flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:28px}
     .ai-section{padding:40px 12px 48px}
@@ -1203,21 +1267,24 @@
     .ai-overlay.fullscreen .ai-overlay-inner{padding:20px 24px}
     .ai-overlay.fullscreen h2{font-size:22px}
     .ai-overlay.fullscreen .ai-o-desc{font-size:14px;margin-bottom:6px}
-    .ai-overlay.fullscreen .ai-static-main{gap:12px}
-    .ai-overlay.fullscreen .ai-static-col{max-width:130px;gap:8px}
-    .ai-overlay.fullscreen .ai-static-col .sf-item{padding:14px 12px}
-    .ai-overlay.fullscreen .ai-static-col .sf-item .sf-icon{font-size:24px}
-    .ai-overlay.fullscreen .ai-static-col .sf-item h4{font-size:15px}
-    .ai-overlay.fullscreen .ai-static-col .sf-item p{font-size:12px}
+    .ai-overlay.fullscreen .ai-static-main{gap:10px}
+    .ai-overlay.fullscreen .ai-static-col{max-width:150px;gap:6px}
+    .ai-overlay.fullscreen .ai-static-col .sf-item{padding:10px 10px}
+    .ai-overlay.fullscreen .ai-static-col .sf-item .sf-icon{font-size:20px;margin-bottom:4px}
+    .ai-overlay.fullscreen .ai-static-col .sf-item h4{font-size:13px;margin-bottom:4px}
+    .ai-overlay.fullscreen .ai-static-col .sf-item p{font-size:11px;line-height:1.4}
     .ai-overlay.fullscreen .ai-static-img{height:40vh;max-height:300px}
     .ai-overlay.fullscreen .ai-o-tech span{font-size:11px;padding:4px 12px}
   }
   @media(max-width:440px){
-    .ai-overlay.fullscreen .ai-overlay-inner{padding:16px 16px}
-    .ai-overlay.fullscreen .ai-static-main{flex-direction:column;gap:8px;overflow-y:auto}
-    .ai-overlay.fullscreen .ai-static-col{flex-direction:row;max-width:100%;gap:6px;width:100%}
-    .ai-overlay.fullscreen .ai-static-col .sf-item{flex:1;padding:10px 8px}
-    .ai-overlay.fullscreen .ai-static-img{height:30vh;max-height:180px}
+    .ai-overlay.fullscreen .ai-overlay-inner{padding:14px 12px}
+    .ai-overlay.fullscreen .ai-static-main{flex-direction:column;gap:6px;overflow-y:auto}
+    .ai-overlay.fullscreen .ai-static-col{flex-direction:row;max-width:100%;gap:4px;width:100%}
+    .ai-overlay.fullscreen .ai-static-col .sf-item{flex:1;padding:8px 6px}
+    .ai-overlay.fullscreen .ai-static-col .sf-item .sf-icon{font-size:16px;margin-bottom:2px}
+    .ai-overlay.fullscreen .ai-static-col .sf-item h4{font-size:11px;margin-bottom:2px}
+    .ai-overlay.fullscreen .ai-static-col .sf-item p{font-size:10px;line-height:1.3;display:none}
+    .ai-overlay.fullscreen .ai-static-img{height:25vh;max-height:160px}
     .ai-overlay.fullscreen .ai-static-col .sf-item .sf-icon{font-size:20px}
     .ai-overlay.fullscreen .ai-static-col .sf-item h4{font-size:13px}
     .ai-overlay.fullscreen .ai-static-col .sf-item p{font-size:11px}
@@ -1362,78 +1429,125 @@
 
 <div class="section-divider"><svg viewBox="0 0 1200 80" preserveAspectRatio="none"><path class="divider-path" d="M0,40 Q300,10 600,40 T1200,40 L1200,80 L0,80 Z" fill="#ffffff"/></svg></div>
 
-<!-- ===== AI Exploration Section ===== -->
+<!-- ===== AI Exploration Section — Auto Carousel ===== -->
 <section class="ai-section" id="ps-ai">
   <div class="ai-strip">
     <h2 class="ai-strip-title">AI 探索作品</h2>
+    <div class="ai-carousel-ctrl" id="aiCarouselCtrl">
+      <button class="ai-ctrl-btn ai-ctrl-prev" aria-label="上一个作品">‹</button>
+      <div class="ai-ctrl-dots" id="aiCarouselDots"></div>
+      <button class="ai-ctrl-btn ai-ctrl-next" aria-label="下一个作品">›</button>
+    </div>
   </div>
-  <div class="ai-grid" id="aiGrid">
-    <div class="ai-card" data-idx="0" role="button" tabindex="0">
-      <div class="ai-pick-well ai-pick-well--mist">
-        <picture><source srcset="optimized/中药/主界面.webp" type="image/webp"><img class="ai-pick-img" src="中药/主界面.png" alt="本草智鉴 APP 主界面" width="600" height="800" loading="lazy" decoding="async"></picture>
-      </div>
-      <div class="ai-swatches" aria-hidden="true"><span style="background:#4a7c59"></span><span style="background:#b8d4c4"></span><span style="background:#2d4a38"></span></div>
-      <div class="ai-card-body">
-        <div class="ai-pick-title-wrap"><span class="ai-new">应用开发</span></div>
-        <h3>本草智鉴 · APP</h3>
-        <p class="ai-pick-desc">AI 中药材智能鉴别与学习系统</p>
-        <p class="ai-pick-line">识别 · 3D · 问答</p>
-        <div class="ai-pick-cta">
-          <span class="ai-btn-pill">进一步了解</span>
-          <span class="ai-link-text">查看作品 ›</span>
+  <div class="ai-carousel" id="aiCarousel">
+    <div class="ai-carousel-track" id="aiCarouselTrack">
+      <!-- 1/6 本草智鉴 -->
+      <div class="ai-card" data-idx="0" role="button" tabindex="0">
+        <div class="ai-pick-well ai-pick-well--mist">
+          <picture><source srcset="optimized/中药/主界面.webp" type="image/webp"><img class="ai-pick-img" src="中药/主界面.png" alt="本草智鉴 APP 主界面" width="600" height="800" loading="lazy" decoding="async"></picture>
         </div>
-        <span class="ai-hint">点击查看详情</span>
-      </div>
-    </div>
-    <div class="ai-card" data-idx="1" role="button" tabindex="0">
-      <div class="ai-pick-well ai-pick-well--dark">
-        <picture><source srcset="optimized/视频作品/鹅鸭杀AIGC封面.webp" type="image/webp"><img class="ai-pick-img" src="视频作品/鹅鸭杀AIGC封面.jpg" alt="鹅鸭杀 AIGC 成片" width="1920" height="1080" loading="lazy" decoding="async"></picture>
-      </div>
-      <div class="ai-swatches" aria-hidden="true"><span style="background:#3a3a3c"></span><span style="background:#6e6e73"></span><span style="background:#aeaeb2"></span></div>
-      <div class="ai-card-body">
-        <div class="ai-pick-title-wrap"><span class="ai-new">AIGC</span></div>
-        <h3>鹅鸭杀 · 同人漫剧</h3>
-        <p class="ai-pick-desc">AI 全流程制作的叙事短片</p>
-        <p class="ai-pick-line">剧本 · 画面 · 剪辑</p>
-        <div class="ai-pick-cta">
-          <span class="ai-btn-pill">进一步了解</span>
-          <span class="ai-link-text">观看成片 ›</span>
+        <div class="ai-swatches" aria-hidden="true"><span style="background:#4a7c59"></span><span style="background:#b8d4c4"></span><span style="background:#2d4a38"></span></div>
+        <div class="ai-card-body">
+          <div class="ai-pick-title-wrap"><span class="ai-new">应用开发</span></div>
+          <h3>本草智鉴 · APP</h3>
+          <p class="ai-pick-desc">AI 中药材智能鉴别与学习系统</p>
+          <p class="ai-pick-line">识别 · 3D · 问答</p>
+          <div class="ai-pick-cta">
+            <span class="ai-btn-pill">进一步了解</span>
+            <span class="ai-link-text">查看作品 ›</span>
+          </div>
+          <span class="ai-hint">点击查看详情</span>
         </div>
-        <span class="ai-hint">点击查看详情</span>
       </div>
-    </div>
-    <div class="ai-card" data-idx="2" role="button" tabindex="0">
-      <div class="ai-pick-well ai-pick-well--blue">
-        <picture><source srcset="optimized/游戏/封面.webp" type="image/webp"><img class="ai-pick-img" src="游戏/封面.png" alt="交互游戏封面" width="600" height="800" loading="lazy" decoding="async"></picture>
-      </div>
-      <div class="ai-swatches" aria-hidden="true"><span style="background:#0071e3"></span><span style="background:#64b5f6"></span><span style="background:#c5d8f0"></span></div>
-      <div class="ai-card-body">
-        <div class="ai-pick-title-wrap"><span class="ai-new">AI 辅助开发</span></div>
-        <h3>交互游戏 · 剧情冒险</h3>
-        <p class="ai-pick-desc">AI 辅助生成的剧情互动游戏</p>
-        <p class="ai-pick-line">剧情 · 选项 · AI 驱动</p>
-        <div class="ai-pick-cta">
-          <span class="ai-btn-pill">进一步了解</span>
-          <span class="ai-link-text">查看说明 ›</span>
+      <!-- 2/6 鹅鸭杀 -->
+      <div class="ai-card" data-idx="1" role="button" tabindex="0">
+        <div class="ai-pick-well ai-pick-well--dark">
+          <picture><source srcset="optimized/视频作品/鹅鸭杀AIGC封面.webp" type="image/webp"><img class="ai-pick-img" src="视频作品/鹅鸭杀AIGC封面.jpg" alt="鹅鸭杀 AIGC 成片" width="1920" height="1080" loading="lazy" decoding="async"></picture>
         </div>
-        <span class="ai-hint">点击查看详情</span>
-      </div>
-    </div>
-    <div class="ai-card" data-idx="3" role="button" tabindex="0">
-      <div class="ai-pick-well ai-pick-well--dark">
-        <picture><source srcset="optimized/AI对话网站/封面.webp" type="image/webp"><img class="ai-pick-img" src="AI对话网站/封面.png" alt="AI 对话网站封面" width="600" height="800" loading="lazy" decoding="async"></picture>
-      </div>
-      <div class="ai-swatches" aria-hidden="true"><span style="background:#6c5ce7"></span><span style="background:#a78bfa"></span><span style="background:#2d1b69"></span></div>
-      <div class="ai-card-body">
-        <div class="ai-pick-title-wrap"><span class="ai-new">Vibe Coding</span></div>
-        <h3>AI 对话 · 角色引擎</h3>
-        <p class="ai-pick-desc">用 Claude Code Vibe Coding 构建的 AI 角色对话平台</p>
-        <p class="ai-pick-line">角色设定 · 关系网络 · 人格复刻</p>
-        <div class="ai-pick-cta">
-          <span class="ai-btn-pill">进一步了解</span>
-          <span class="ai-link-text">查看作品 ›</span>
+        <div class="ai-swatches" aria-hidden="true"><span style="background:#3a3a3c"></span><span style="background:#6e6e73"></span><span style="background:#aeaeb2"></span></div>
+        <div class="ai-card-body">
+          <div class="ai-pick-title-wrap"><span class="ai-new">AIGC</span></div>
+          <h3>鹅鸭杀 · 同人漫剧</h3>
+          <p class="ai-pick-desc">AI 全流程制作的叙事短片</p>
+          <p class="ai-pick-line">剧本 · 画面 · 剪辑</p>
+          <div class="ai-pick-cta">
+            <span class="ai-btn-pill">进一步了解</span>
+            <span class="ai-link-text">观看成片 ›</span>
+          </div>
+          <span class="ai-hint">点击查看详情</span>
         </div>
-        <span class="ai-hint">点击查看详情</span>
+      </div>
+      <!-- 3/6 交互游戏 -->
+      <div class="ai-card" data-idx="2" role="button" tabindex="0">
+        <div class="ai-pick-well ai-pick-well--blue">
+          <picture><source srcset="optimized/游戏/封面.webp" type="image/webp"><img class="ai-pick-img" src="游戏/封面.png" alt="交互游戏封面" width="600" height="800" loading="lazy" decoding="async"></picture>
+        </div>
+        <div class="ai-swatches" aria-hidden="true"><span style="background:#0071e3"></span><span style="background:#64b5f6"></span><span style="background:#c5d8f0"></span></div>
+        <div class="ai-card-body">
+          <div class="ai-pick-title-wrap"><span class="ai-new">AI 辅助开发</span></div>
+          <h3>交互游戏 · 剧情冒险</h3>
+          <p class="ai-pick-desc">AI 辅助生成的剧情互动游戏</p>
+          <p class="ai-pick-line">剧情 · 选项 · AI 驱动</p>
+          <div class="ai-pick-cta">
+            <span class="ai-btn-pill">进一步了解</span>
+            <span class="ai-link-text">查看说明 ›</span>
+          </div>
+          <span class="ai-hint">点击查看详情</span>
+        </div>
+      </div>
+      <!-- 4/6 AI 对话 -->
+      <div class="ai-card" data-idx="3" role="button" tabindex="0">
+        <div class="ai-pick-well ai-pick-well--dark">
+          <picture><source srcset="optimized/AI对话网站/封面.webp" type="image/webp"><img class="ai-pick-img" src="AI对话网站/封面.png" alt="AI 对话网站封面" width="600" height="800" loading="lazy" decoding="async"></picture>
+        </div>
+        <div class="ai-swatches" aria-hidden="true"><span style="background:#6c5ce7"></span><span style="background:#a78bfa"></span><span style="background:#2d1b69"></span></div>
+        <div class="ai-card-body">
+          <div class="ai-pick-title-wrap"><span class="ai-new">Vibe Coding</span></div>
+          <h3>AI 对话 · 角色引擎</h3>
+          <p class="ai-pick-desc">用 Claude Code Vibe Coding 构建的 AI 角色对话平台</p>
+          <p class="ai-pick-line">角色设定 · 关系网络 · 人格复刻</p>
+          <div class="ai-pick-cta">
+            <span class="ai-btn-pill">进一步了解</span>
+            <span class="ai-link-text">查看作品 ›</span>
+          </div>
+          <span class="ai-hint">点击查看详情</span>
+        </div>
+      </div>
+      <!-- 5/6 有啥吃啥 · 智能食谱推荐 -->
+      <div class="ai-card" data-idx="4" role="button" tabindex="0">
+        <div class="ai-pick-well" style="background:linear-gradient(145deg, #FFF8F0 0%, #FFE8D0 100%)">
+          <picture><source srcset="optimized/冰箱有啥吃啥/主页面.webp" type="image/webp"><img class="ai-pick-img" src="冰箱有啥吃啥小程序/主页面.jpg" alt="有啥吃啥小程序主界面" width="600" height="800" loading="lazy" decoding="async"></picture>
+        </div>
+        <div class="ai-swatches" aria-hidden="true"><span style="background:#FF8C42"></span><span style="background:#FFD93D"></span><span style="background:#6BCB77"></span></div>
+        <div class="ai-card-body">
+          <div class="ai-pick-title-wrap"><span class="ai-new" style="color:#FF8C42">小程序开发</span></div>
+          <h3>冰箱有啥吃啥 · 智能食谱推荐</h3>
+          <p class="ai-pick-desc">AI 驱动的冰箱食材管理微信小程序</p>
+          <p class="ai-pick-line">食材管理 · AI 推荐 · 烹饪记录 · 嘉奖体系</p>
+          <div class="ai-pick-cta">
+            <span class="ai-btn-pill">进一步了解</span>
+            <span class="ai-link-text">查看作品 ›</span>
+          </div>
+          <span class="ai-hint">点击查看详情</span>
+        </div>
+      </div>
+      <!-- 6/6 灵语 · AI 语音输入 -->
+      <div class="ai-card" data-idx="5" role="button" tabindex="0">
+        <div class="ai-pick-well" style="background:linear-gradient(145deg, #E8F4FD 0%, #D0E8F5 100%)">
+          <picture><source srcset="optimized/灵语-语音输入/办公演示.webp" type="image/webp"><img class="ai-pick-img" src="灵语-语音输入/办公演示.jpg" alt="灵语主界面" width="600" height="800" loading="lazy" decoding="async"></picture>
+        </div>
+        <div class="ai-swatches" aria-hidden="true"><span style="background:#4A90D9"></span><span style="background:#7FB3E0"></span><span style="background:#D4E6F5"></span></div>
+        <div class="ai-card-body">
+          <div class="ai-pick-title-wrap"><span class="ai-new" style="color:#4A90D9">桌面软件</span></div>
+          <h3>灵语 · AI 语音输入助手</h3>
+          <p class="ai-pick-desc">AI 驱动的语音输入桌面软件</p>
+          <p class="ai-pick-line">办公 · 聊天 · 创作 · 词库 · 历史</p>
+          <div class="ai-pick-cta">
+            <span class="ai-btn-pill">进一步了解</span>
+            <span class="ai-link-text">查看作品 ›</span>
+          </div>
+          <span class="ai-hint">点击查看详情</span>
+        </div>
       </div>
     </div>
   </div>
@@ -1593,13 +1707,6 @@
 <section id="contact">
   <div class="section-inner">
     <div class="section-header"><span class="section-label">Contact</span><h2 class="section-title"><span class="line-r"><span class="lr d1">一起合作</span></span></h2><div class="section-desc" style="margin-top:10px"><span class="line-r"><span class="lr d2">项目合作、创意交流，都欢迎联系我。</span></span></div></div>
-    <div class="contact-g">
-      <form class="contact-form" id="contactForm">
-        <input type="text" id="formName" placeholder="你的名字" required>
-        <input type="email" id="formEmail" placeholder="你的邮箱" required>
-        <textarea id="formContent" placeholder="有什么想说的？"></textarea>
-        <button type="submit" class="btn btn-primary" style="align-self:flex-start">发送 →</button>
-      </form>
       <div class="contact-info">
         <div class="contact-row"><div class="ci">📧</div><span>ly2622319390@163.com</span></div>
         <div class="contact-row"><div class="ci">📍</div><span>中国 · 远程协作</span></div>
@@ -1844,6 +1951,44 @@
         {icon:'👤',title:'现实好友人格复刻',desc:'导入聊天记录，AI 自动清洗数据、提取语气特征。重建语言习惯+关系位置+互动感觉的三维人格模型，让 AI 如真人般对话。', imgs:['AI对话网站/复刻现实朋友对话1.png','AI对话网站/复刻现实朋友对话2.png']},
       ],
       tech:['Claude Code','Vibe Coding','HTML/CSS/JS','角色卡系统','AI API']},
+    {tag:'小程序',title:'冰箱有啥吃啥 · AI 智能食谱推荐',tagColor:'oklch(68% 0.16 40)',tagBg:'oklch(68% 0.16 40 /0.12)',
+      staticLayout:true,
+      desc:'输入你家冰箱里有什么，告诉你今天能做什么好吃的。一款 AI 驱动的智能食谱推荐微信小程序，覆盖食材库存管理、AI 食谱推荐、分步烹饪指南、成品记录与嘉奖激励的完整闭环。从"做饭困难户"到"厨房小当家"，就差一个冰箱管家。',
+      media:[
+        {src:'冰箱有啥吃啥小程序/主页面.jpg',label:'首页 · 冰箱快照 & 今日推荐',span:2},
+        {src:'冰箱有啥吃啥小程序/食谱推荐.jpg',label:'AI 食谱推荐'},
+        {src:'冰箱有啥吃啥小程序/菜谱展示.jpg',label:'菜谱展示'},
+        {src:'冰箱有啥吃啥小程序/烹饪过程.jpg',label:'烹饪过程'},
+        {src:'冰箱有啥吃啥小程序/完成美食.jpg',label:'完成美食'},
+        {src:'冰箱有啥吃啥小程序/偏好设置.jpg',label:'偏好设置'},
+      ],
+      features:[
+        {icon:'🥬',title:'冰箱管理',desc:'微信小程序端食材库存管理，支持添加/消耗/过期预警。食材分类展示、购物清单一键生成。', img:'冰箱有啥吃啥小程序/主页面.jpg'},
+        {icon:'🤖',title:'AI 智能推荐',desc:'基于用户库存食材 + 口味偏好 + 厨艺水平 + 生活场景的四维推荐引擎。匹配度排序、缺食材提示、可替代方案。', img:'冰箱有啥吃啥小程序/食谱推荐.jpg'},
+        {icon:'📖',title:'食谱详情',desc:'分步烹饪指南，内置计时器，食材清单 & 库存匹配度一目了然。支持难度过滤、菜系分类、收藏复用。', img:'冰箱有啥吃啥小程序/菜谱展示.jpg'},
+        {icon:'⏱️',title:'烹饪模式',desc:'步骤跟随模式 + 独立计时器 + 全局浮窗。语音播报提醒，计时完成震动通知，做菜不手忙脚乱。', img:'冰箱有啥吃啥小程序/烹饪过程.jpg'},
+        {icon:'🏆',title:'嘉奖体系',desc:'做完菜上传成品照片，AI 识别菜品质量，自动发放徽章。厨艺等级、经验值、连续做饭天数、成就墙收集。', img:'冰箱有啥吃啥小程序/完成美食.jpg'},
+        {icon:'🎯',title:'个性化配置',desc:'首次对话式引导 onboarding — 辣度/甜度滑块、忌口/过敏原、厨艺自评、生活场景多选、推荐策略偏好，一切可随时修改。', img:'冰箱有啥吃啥小程序/偏好设置.jpg'},
+      ],
+      tech:['微信小程序','Node.js','PostgreSQL','Redis','LLM API','TDesign']},
+    {tag:'桌面软件', title:'灵语 · AI 语音输入助手', tagColor:'oklch(68% 0.14 210)', tagBg:'oklch(68% 0.14 210 /0.12)',
+      staticLayout:true, staticLayoutLeft:2,
+      desc:'灵语是一款 AI 驱动的语音输入桌面软件，覆盖办公、聊天、创作三大核心场景。内置智能词库管理系统与完整历史记录回溯，让说话成为最高效的输入方式——想到什么，说出来就好。无需键盘，不打断思路。',
+      media:[
+        {src:'灵语-语音输入/办公演示.jpg', label:'办公模块 · AI 语音转文字', span:2},
+        {src:'灵语-语音输入/聊天演示.jpg', label:'聊天模块 · 实时语音输入'},
+        {src:'灵语-语音输入/创作-完整.png', label:'创作模块 · 灵感即说即录'},
+        {src:'灵语-语音输入/历史记录.png', label:'历史记录 · 全量回溯'},
+        {src:'灵语-语音输入/词库管理-行业词库.png', label:'词库系统 · 行业词库管理'},
+      ],
+      features:[
+        {icon:'💼', title:'办公模块', desc:'AI 语音转文字，支持专业术语识别。报告撰写、会议纪要、邮件回复——用说的比打的快 3 倍。', img:'灵语-语音输入/办公演示.jpg'},
+        {icon:'💬', title:'聊天模块', desc:'实时语音实时出字，自然流畅的聊天体验。支持微信、QQ、飞书等多平台，解放双手，聊天不中断。', img:'灵语-语音输入/聊天演示.jpg'},
+        {icon:'✍️', title:'创作模块', desc:'灵感即说即录，语音驱动内容创作。支持长文本连续输入，适合写作、文案、剧本等创意场景。越说话，思路越清晰。', img:'灵语-语音输入/创作-完整.png'},
+        {icon:'📋', title:'历史记录', desc:'完整的语音输入历史回溯，支持关键词搜索、按日期分类、一键导出。再也不用担心"我刚才说了什么"。', img:'灵语-语音输入/历史记录.png'},
+        {icon:'📚', title:'词库系统', desc:'行业词库管理，支持自定义热词与专业术语。医疗、法律、IT 等行业词库一键切换，持续优化识别准确率，越用越精准。', img:'灵语-语音输入/词库管理-行业词库.png'},
+      ],
+      tech:['语音识别','Python','桌面应用','AI 词库','本地部署']},
   ];
 
   const aiOverlay = document.getElementById('aiOverlay');
@@ -1864,9 +2009,7 @@ function optSrc(src) {
 }
 
 
-  document.querySelectorAll('.ai-card[data-idx]').forEach(card => {
-    card.addEventListener('click', () => {
-      const d = AI_DATA[parseInt(card.dataset.idx)];
+  function openAIOverlay(d) {
       if (!d) return;
       aiOverlay.classList.add('loading');
       aiOTag.textContent = d.tag;
@@ -1886,19 +2029,20 @@ function optSrc(src) {
         const isVideo = d.staticVideo;
         const defaultMedia = d.media[0].src;
         const f = d.features;
+        const leftN = d.staticLayoutLeft || 3;
+        const leftF = f.slice(0, leftN);
+        const rightF = f.slice(leftN);
+        function sfItem(item) {
+          const imgs = JSON.stringify(item.imgs || (item.img ? [item.img] : []));
+          return `<div class="sf-item" data-imgs='${imgs}' data-idx="0"><div class="sf-icon">${item.icon}</div><h4>${item.title}</h4><p>${item.desc}</p></div>`;
+        }
         aiOMedia.innerHTML = `
-        <div class="ai-static-col">
-          <div class="sf-item" data-imgs='${JSON.stringify(f[0].imgs||(f[0].img?[f[0].img]:[]))}' data-idx="0"><div class="sf-icon">${f[0].icon}</div><h4>${f[0].title}</h4><p>${f[0].desc}</p></div>
-          <div class="sf-item" data-imgs='${JSON.stringify(f[2].imgs||(f[2].img?[f[2].img]:[]))}' data-idx="0"><div class="sf-icon">${f[2].icon}</div><h4>${f[2].title}</h4><p>${f[2].desc}</p></div>
-        </div>
+        <div class="ai-static-col">${leftF.map(sfItem).join('')}</div>
         <div class="ai-static-img-wrap">
           <div class="ai-ss-progress"></div>
           <div class="ai-static-img" style="position:relative">${isVideo?`<video src="${optSrc(defaultMedia)}" controls playsinline autoplay preload="metadata"></video>`:`<img src="${optSrc(defaultMedia)}" alt="">`}<button class="ai-ss-nav ai-ss-prev">‹</button><button class="ai-ss-nav ai-ss-next">›</button></div>
         </div>
-        <div class="ai-static-col">
-          <div class="sf-item" data-imgs='${JSON.stringify(f[1].imgs||(f[1].img?[f[1].img]:[]))}' data-idx="0"><div class="sf-icon">${f[1].icon}</div><h4>${f[1].title}</h4><p>${f[1].desc}</p></div>
-          <div class="sf-item" data-imgs='${JSON.stringify(f[3].imgs||(f[3].img?[f[3].img]:[]))}' data-idx="0"><div class="sf-icon">${f[3].icon}</div><h4>${f[3].title}</h4><p>${f[3].desc}</p></div>
-        </div>`;
+        <div class="ai-static-col">${rightF.map(sfItem).join('')}</div>`;
                 // --- image rotation state ---
 let switching = false;
 let autoTimer;
@@ -2034,15 +2178,33 @@ startAutoRotate();      } else {
       ).join('');
       aiOTech.innerHTML = d.tech.map(t => `<span>${t}</span>`).join('');
       requestAnimationFrame(() => requestAnimationFrame(() => aiOverlay.classList.remove('loading')));
+      // Pause carousel while overlay is open
+      const carouselEl = document.getElementById('aiCarousel');
+      if (carouselEl && carouselEl._pauseCarousel) carouselEl._pauseCarousel();
       aiOverlay.classList.add('active');
       document.body.style.overflow = 'hidden';
+  }
+
+  // Event delegation for AI carousel card clicks (supports cloned cards)
+  const aiTrack = document.getElementById('aiCarouselTrack');
+  if (aiTrack) {
+    aiTrack.addEventListener('click', function(e) {
+      const card = e.target.closest('.ai-card');
+      if (!card) return;
+      const idx = parseInt(card.dataset.idx, 10);
+      if (isNaN(idx)) return;
+      const d = AI_DATA[idx];
+      if (!d) return;
+      openAIOverlay(d);
     });
-    card.addEventListener('keydown', e => {
+    aiTrack.addEventListener('keydown', function(e) {
       if (e.key !== 'Enter' && e.key !== ' ') return;
+      const card = e.target.closest('.ai-card');
+      if (!card) return;
       e.preventDefault();
       card.click();
     });
-  });
+  }
 
   function closeAIOverlay() {
     aiOverlay.classList.remove('active');
@@ -2055,16 +2217,247 @@ startAutoRotate();      } else {
     // Pause any video in static layout
     const vid = aiOMedia.querySelector('.ai-static-img video');
     if (vid) { vid.pause(); vid.removeAttribute('src'); vid.load(); }
+    // Resume carousel autoplay
+    const carouselEl = document.getElementById('aiCarousel');
+    if (carouselEl && carouselEl._resumeCarousel) carouselEl._resumeCarousel();
   }
   document.getElementById('aiOClose').addEventListener('click', closeAIOverlay);
   document.getElementById('aiOBack').addEventListener('click', closeAIOverlay);
   aiOverlay.addEventListener('click', e => { if (e.target === aiOverlay) closeAIOverlay(); });
 
-  // AI card scroll animation
+  // AI card scroll animation (skip carousel cards)
   const aiO = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); aiO.unobserve(e.target); } });
   }, { threshold: 0.08 });
-  document.querySelectorAll('.ai-card').forEach(el => aiO.observe(el));
+  document.querySelectorAll('.ai-card').forEach(el => {
+    if (!el.closest('.ai-carousel')) aiO.observe(el);
+  });
+
+  // ===== AI Carousel — Infinite Seamless Loop =====
+  (function initAICarousel() {
+    const track = document.getElementById('aiCarouselTrack');
+    const container = document.getElementById('aiCarousel');
+    const dotsEl = document.getElementById('aiCarouselDots');
+    const prevBtn = document.querySelector('.ai-ctrl-prev');
+    const nextBtn = document.querySelector('.ai-ctrl-next');
+    if (!track || !container) return;
+
+    const realCards = [...track.querySelectorAll('.ai-card')];
+    const total = realCards.length;
+    if (total < 2) return;
+
+    // Mark all carousel cards visible immediately
+    realCards.forEach(c => c.classList.add('visible'));
+
+    // --- Build infinite track via clones ---
+    const MAX_VISIBLE = 4;
+    const CLONE_COUNT = Math.min(MAX_VISIBLE, total);
+
+    // Clone first CLONE_COUNT cards and append to end
+    for (let i = 0; i < CLONE_COUNT; i++) {
+      const clone = realCards[i].cloneNode(true);
+      clone.classList.add('ai-card-clone');
+      track.appendChild(clone);
+    }
+    // Clone last CLONE_COUNT cards and prepend to beginning
+    for (let i = 0; i < CLONE_COUNT; i++) {
+      const idx = (total - CLONE_COUNT + i + total) % total;
+      const clone = realCards[idx].cloneNode(true);
+      clone.classList.add('ai-card-clone');
+      track.insertBefore(clone, track.firstChild);
+    }
+
+    // Extended card collection — all real + clones
+    const allCards = track.querySelectorAll('.ai-card');
+    // Ensure all cards (including clones) are visible
+    allCards.forEach(c => c.classList.add('visible'));
+
+    let actualCur = CLONE_COUNT; // points to first real card (card real-0)
+    let autoTimer = null;
+    let isPaused = false;
+    let gap = 18;
+
+    function calcVisible() {
+      const ww = window.innerWidth;
+      if (ww > 820) return 4;
+      if (ww > 640) return 2;
+      return 1;
+    }
+
+    function getStep() {
+      if (total === 0) return 0;
+      const first = realCards[0];
+      const style = window.getComputedStyle(first);
+      const mw = parseFloat(style.marginLeft) || 0;
+      const mwR = parseFloat(style.marginRight) || 0;
+      return first.offsetWidth + mw + mwR + gap;
+    }
+
+    // Get logical index (0 … total-1) from actual track position
+    function logicalIdx() {
+      return ((actualCur - CLONE_COUNT) % total + total) % total;
+    }
+
+    function render(animate) {
+      const step = getStep();
+      track.style.transition = animate !== false ? 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)' : 'none';
+      track.style.transform = 'translateX(' + (-actualCur * step) + 'px)';
+      updateDots();
+    }
+
+    // Snap back from clone zone to real zone after transition completes
+    function snapIfNeeded() {
+      if (actualCur < CLONE_COUNT) {
+        // Went too far left — snap forward by total
+        actualCur += total;
+        track.style.transition = 'none';
+        track.style.transform = 'translateX(' + (-actualCur * getStep()) + 'px)';
+      } else if (actualCur >= CLONE_COUNT + total) {
+        // Went too far right — snap backward by total
+        actualCur -= total;
+        track.style.transition = 'none';
+        track.style.transform = 'translateX(' + (-actualCur * getStep()) + 'px)';
+      }
+    }
+
+    track.addEventListener('transitionend', snapIfNeeded);
+
+    function updateDots() {
+      if (!dotsEl) return;
+      const li = logicalIdx();
+      const dots = dotsEl.querySelectorAll('.ai-ctrl-dot');
+      dots.forEach((d, i) => d.classList.toggle('active', i === li));
+    }
+
+    function buildDots() {
+      if (!dotsEl) return;
+      dotsEl.innerHTML = '';
+      for (let i = 0; i < total; i++) {
+        const dot = document.createElement('button');
+        dot.className = 'ai-ctrl-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', '第' + (i + 1) + '个作品');
+        dot.addEventListener('click', function () {
+          const li = logicalIdx();
+          const diff = i - li;
+          // Choose shortest path
+          const direct = diff;
+          const wrapAround = diff > 0 ? diff - total : diff + total;
+          const step = Math.abs(direct) <= Math.abs(wrapAround) ? direct : wrapAround;
+          stopAuto();
+          actualCur += step;
+          render(true);
+          startAuto();
+        });
+        dotsEl.appendChild(dot);
+      }
+    }
+
+    function next() {
+      stopAuto();
+      actualCur++;
+      render(true);
+      startAuto();
+    }
+
+    function prev() {
+      stopAuto();
+      actualCur--;
+      render(true);
+      startAuto();
+    }
+
+    function startAuto() {
+      stopAuto();
+      if (isPaused) return;
+      autoTimer = setInterval(function () {
+        if (!isPaused) { actualCur++; render(true); }
+      }, 2500);
+    }
+
+    function stopAuto() {
+      if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+    }
+
+    // Hover pause — pauses autoplay AND stops on mouseover
+    container.addEventListener('mouseenter', function () { isPaused = true; stopAuto(); });
+    container.addEventListener('mouseleave', function () { isPaused = false; startAuto(); });
+
+    // Expose pause/resume for overlay integration
+    container._pauseCarousel = function () { isPaused = true; stopAuto(); };
+    container._resumeCarousel = function () { if (!isPaused) { isPaused = false; startAuto(); } };
+
+    // Arrow buttons
+    if (prevBtn) prevBtn.addEventListener('click', prev);
+    if (nextBtn) nextBtn.addEventListener('click', next);
+
+    // Keyboard nav when focused
+    container.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
+    });
+
+    // Touch / drag swipe support
+    let startX = 0, startY = 0, isDragging = false;
+    container.addEventListener('touchstart', function (e) {
+      if (e.touches.length === 1) { startX = e.touches[0].clientX; startY = e.touches[0].clientY; isDragging = false; }
+    }, { passive: true });
+    container.addEventListener('touchmove', function (e) {
+      if (!startX || e.touches.length !== 1) return;
+      const dx = e.touches[0].clientX - startX;
+      const dy = e.touches[0].clientY - startY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) { isDragging = true; }
+    }, { passive: true });
+    container.addEventListener('touchend', function (e) {
+      if (!startX) return;
+      const dx = e.changedTouches[0].clientX - startX;
+      startX = 0;
+      if (!isDragging || Math.abs(dx) < 40) return;
+      if (dx < 0) next(); else prev();
+    }, { passive: true });
+    // Desktop mouse drag
+    let mouseDown = false, mouseStart = 0;
+    track.addEventListener('mousedown', function (e) {
+      mouseDown = true; mouseStart = e.clientX; track.classList.add('dragging');
+    });
+    window.addEventListener('mousemove', function (e) {
+      if (!mouseDown) return;
+      const dx = e.clientX - mouseStart;
+      if (Math.abs(dx) > 30) { mouseDown = false; track.classList.remove('dragging'); if (dx < 0) next(); else prev(); }
+    });
+    window.addEventListener('mouseup', function () {
+      mouseDown = false; track.classList.remove('dragging');
+    });
+
+    // Resize handler
+    let resizeTimer;
+    function refreshLayout() {
+      const v = calcVisible();
+      const contentW = container.offsetWidth - 24; // 12px track padding × 2
+      const cw = (contentW - (v - 1) * gap) / v;
+      // Apply width to ALL cards (real + clones)
+      allCards.forEach(function (c) { c.style.width = cw + 'px'; });
+      render(false);
+    }
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(refreshLayout, 200);
+    });
+
+    // Init
+    buildDots();
+    refreshLayout();
+
+    // Start autoplay when section enters viewport
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const secObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { startAuto(); secObs.unobserve(e.target); }
+        });
+      }, { threshold: 0.1 });
+      const section = document.getElementById('ps-ai');
+      if (section) secObs.observe(section);
+    }
+  })();
 
   // Slideshow control — TikTok 9:16 style
   const SS_DURATION = 3500;
@@ -2293,23 +2686,9 @@ startAutoRotate();      } else {
   const toggle=document.getElementById('navToggle'),links=document.getElementById('navLinks');
   toggle.addEventListener('click',()=>{toggle.classList.toggle('open');links.classList.toggle('open');document.body.style.overflow=links.classList.contains('open')?'hidden':''});
   links.querySelectorAll('a').forEach(a=>{a.addEventListener('click',()=>{toggle.classList.remove('open');links.classList.remove('open');document.body.style.overflow=''})});
-  document.getElementById('contactForm').addEventListener('submit',async e=>{
+  document.getElementById('contactForm').addEventListener('submit', async e => {
     e.preventDefault();
-    const btn=e.target.querySelector('button'),orig=btn.textContent;
-    const name=document.getElementById('formName').value.trim();
-    const email=document.getElementById('formEmail').value.trim();
-    const content=document.getElementById('formContent').value.trim();
-    if(!name||!email||!content){return}
-    btn.textContent='发送中…';btn.disabled=true;
-    try{
-      const r=await fetch('/api/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,content})});
-      if(!r.ok)throw new Error('发送失败');
-      btn.textContent='✓ 已发送';e.target.reset();
-      setTimeout(()=>{btn.textContent=orig;btn.disabled=false},2500);
-    }catch(err){
-      btn.textContent='✗ 发送失败';btn.disabled=false;
-      setTimeout(()=>{btn.textContent=orig},2000);
-    }
+    // Form submission handled by formspree action
   });
 
   // ===== Scroll Progress Bar =====
