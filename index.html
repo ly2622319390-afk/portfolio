@@ -956,8 +956,8 @@
   .about-c strong{color:var(--text);font-weight:500}
 
   /* ===== Contact ===== */
-  .contact-info{display:flex;flex-direction:column;gap:16px}
-  .contact-row{display:flex;align-items:center;gap:14px;font-size:15px;color:var(--text-secondary)}
+  .contact-info{display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center}
+  .contact-row{display:flex;align-items:center;gap:14px;font-size:15px;color:var(--text-secondary);justify-content:center}
   .contact-row .ci{width:42px;height:42px;border-radius:var(--radius-sm);background:var(--bg-alt);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
   .social-row{display:flex;gap:10px;margin-top:4px}
   .social-row a{width:42px;height:42px;border-radius:var(--radius-sm);background:var(--bg-alt);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:18px;transition:all 0.3s;text-decoration:none}
@@ -1289,6 +1289,143 @@
     .ai-overlay.fullscreen .ai-static-col .sf-item h4{font-size:13px}
     .ai-overlay.fullscreen .ai-static-col .sf-item p{font-size:11px}
   }
+  /* ===== Data Analysis Section ===== */
+  .da-section{
+    --da-accent: #3b7ea8;
+    --da-accent-dim: rgba(59,126,168,0.07);
+    --da-accent-glow: rgba(59,126,168,0.15);
+    --da-bg: #f7f9fb;
+    --da-card-bg: #ffffff;
+    --da-text: #1d1d1f;
+    --da-sub: #6e6e73;
+    --da-border: rgba(0,0,0,0.05);
+    --da-border-hover: rgba(59,126,168,0.15);
+    background: var(--da-bg);
+    padding: 80px 32px 100px;
+    position: relative;
+    overflow: hidden;
+  }
+  .da-section::before{
+    content: ''; position: absolute; top: -20%; right: -10%;
+    width: 45%; height: 70%;
+    background: radial-gradient(ellipse, rgba(59,126,168,0.04), transparent 70%);
+    pointer-events: none;
+  }
+  .da-inner{max-width: 1120px; margin: 0 auto; position: relative; z-index: 1}
+  .da-header{text-align: center; margin-bottom: 64px}
+  .da-label{
+    display: inline-block;
+    font-size: 12px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--da-accent); margin-bottom: 8px; font-family: 'Playfair Display', serif;
+    font-style: italic; font-weight: 400;
+  }
+  .da-header h2{
+    font-size: clamp(36px,4.5vw,54px); font-weight: 600; letter-spacing: -0.03em;
+    line-height: 1.08; color: var(--da-text); margin-bottom: 12px;
+  }
+  .da-header p{
+    font-size: 16px; color: var(--da-sub); line-height: 1.7;
+    max-width: 480px; margin: 0 auto; font-weight: 300;
+  }
+
+  /* Grid of 3 cards */
+  .da-grid{
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  }
+  .da-card{
+    background: var(--da-card-bg);
+    border: 1px solid var(--da-border);
+    border-radius: 16px;
+    padding: 40px 28px 36px;
+    transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
+    display: flex; flex-direction: column;
+    opacity: 0; transform: translateY(24px);
+    position: relative;
+    overflow: hidden;
+  }
+  .da-card::before{
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--da-accent);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  .da-card.visible{opacity: 1; transform: translateY(0)}
+  .da-card:hover{
+    border-color: var(--da-border-hover);
+    box-shadow: 0 8px 32px rgba(59,126,168,0.06);
+    transform: translateY(-4px);
+  }
+  .da-card:hover::before{opacity: 1}
+
+  .da-card-visual{
+    width: 56px; height: 56px; border-radius: 14px;
+    background: var(--da-accent-dim);
+    border: 1px solid rgba(59,126,168,0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; margin-bottom: 20px;
+    flex-shrink: 0;
+    transition: all 0.4s ease;
+  }
+  .da-card:hover .da-card-visual{
+    background: rgba(59,126,168,0.12);
+    transform: scale(1.06);
+  }
+
+  .da-card-tag{
+    display: inline-block;
+    padding: 3px 10px; border-radius: 6px;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.04em;
+    background: var(--da-accent-dim); color: var(--da-accent);
+    border: 1px solid rgba(59,126,168,0.1);
+    margin-bottom: 12px;
+    align-self: flex-start;
+  }
+  .da-card-body h3{
+    font-size: 20px; font-weight: 600; letter-spacing: -0.02em;
+    color: var(--da-text); margin-bottom: 12px; line-height: 1.25;
+  }
+  .da-card-desc{
+    font-size: 14px; color: var(--da-sub); line-height: 1.85;
+    margin-bottom: 20px; font-weight: 300; flex: 1;
+  }
+  .da-card-desc strong{color: var(--da-accent); font-weight: 500}
+
+  .da-card-tech{
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: auto;
+  }
+  .da-card-tech span{
+    padding: 4px 12px; border-radius: 100px;
+    font-size: 11px; font-weight: 400;
+    color: var(--da-sub);
+    background: var(--da-bg);
+    border: 1px solid var(--da-border);
+    letter-spacing: 0.03em;
+    transition: all 0.3s ease;
+  }
+  .da-card:hover .da-card-tech span{
+    border-color: rgba(59,126,168,0.12);
+    color: var(--da-accent);
+  }
+
+  @media(max-width:1100px){
+    .da-grid{grid-template-columns: repeat(2, 1fr); gap: 16px}
+    .da-section{padding: 60px 20px 72px}
+    .da-card{padding: 32px 24px 28px}
+    .da-header{margin-bottom: 40px}
+  }
+  @media(max-width:640px){
+    .da-grid{grid-template-columns: 1fr; gap: 14px}
+    .da-section{padding: 48px 16px 60px}
+    .da-card-body h3{font-size: 17px}
+    .da-card-desc{font-size: 13px}
+    .da-card{padding: 28px 20px 24px}
+    .da-header h2{font-size: 26px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .da-card{opacity:1!important;transform:none!important}
+  }
 </style>
 </head>
 <body>
@@ -1297,13 +1434,14 @@
   <div class="nav-inner">
     <div class="nav-logo">LY</div>
 	    <ul class="nav-links" id="navLinks">
-	      <li><a href="#skills">能力</a></li>
-	      <li><a href="#ps-video">剪辑</a></li>
-	      <li><a href="#ps-ai">AI</a></li>
-	      <li><a href="#ops">运营</a></li>
-	      <li><a href="#about">关于</a></li>
-	      <li><a href="#contact">联系</a></li>
-	    </ul>
+		      <li><a href="#skills">能力</a></li>
+		      <li><a href="#ps-ai">AI</a></li>
+		      <li><a href="#data-analysis">分析</a></li>
+		      <li><a href="#ops">运营</a></li>
+		      <li><a href="#ps-video">剪辑</a></li>
+		      <li><a href="#about">关于</a></li>
+		      <li><a href="#contact">联系</a></li>
+		    </ul>
     <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -1377,55 +1515,48 @@
     </svg>
 
     <div class="skills-fields">
-      <div class="skill-field" data-delay="0">
+      <div class="skill-field" data-delay="0" data-href="#ps-ai">
         <div class="sf-geo"></div>
         <span class="sf-num">01</span>
-        <span class="sf-icon">🎬</span>
-        <h3 class="sf-title">剪辑视频</h3>
-        <div class="sf-rule"></div>
-        <p class="sf-desc">从短视频到宣传片，叙事剪辑与节奏把控。精通 Premiere Pro、Final Cut Pro。</p>
-        <div class="sf-tags"><span>叙事剪辑</span><span>调色</span><span>AE 特效</span></div>
-      </div>
-      <div class="skill-field" data-delay="1">
-        <div class="sf-geo"></div>
-        <span class="sf-num">02</span>
         <span class="sf-icon">🤖</span>
         <h3 class="sf-title">AI 探索</h3>
         <div class="sf-rule"></div>
         <p class="sf-desc">AI 在创意工作流中的应用，从提示词工程到自动化管线。</p>
         <div class="sf-tags"><span>提示词工程</span><span>AI 视频</span><span>自动化</span></div>
       </div>
-      <div class="skill-field" data-delay="2">
+      <div class="skill-field" data-delay="1" data-href="#data-analysis">
+        <div class="sf-geo"></div>
+        <span class="sf-num">02</span>
+        <span class="sf-icon">📈</span>
+        <h3 class="sf-title">数据分析</h3>
+        <div class="sf-rule"></div>
+        <p class="sf-desc">运用 R 语言、SQL、Python、Excel 进行数据清洗、建模与可视化，驱动业务决策与策略优化。</p>
+        <div class="sf-tags"><span>R 语言</span><span>SQL</span><span>Python</span><span>Excel</span></div>
+      </div>
+      <div class="skill-field" data-delay="2" data-href="#ops">
         <div class="sf-geo"></div>
         <span class="sf-num">03</span>
         <span class="sf-icon">📊</span>
-        <h3 class="sf-title">新媒体运营</h3>
+        <h3 class="sf-title">运营策划</h3>
         <div class="sf-rule"></div>
-        <p class="sf-desc">数据驱动运营策略，从0到1搭建账号矩阵。</p>
-        <div class="sf-tags"><span>内容策略</span><span>数据分析</span><span>社群运营</span></div>
+        <p class="sf-desc">从活动策划到内容运营，全链路统筹与执行落地。</p>
+        <div class="sf-tags"><span>活动策划</span><span>内容运营</span><span>用户增长</span></div>
       </div>
-      <div class="skill-field" data-delay="3">
+      <div class="skill-field" data-delay="3" data-href="#ps-video">
         <div class="sf-geo"></div>
         <span class="sf-num">04</span>
-        <span class="sf-icon">💡</span>
-        <h3 class="sf-title">创意策划</h3>
+        <span class="sf-icon">🎬</span>
+        <h3 class="sf-title">剪辑视频</h3>
         <div class="sf-rule"></div>
-        <p class="sf-desc">从概念孵化到落地执行，整合资源完成创意方案。</p>
-        <div class="sf-tags"><span>品牌策划</span><span>内容 IP</span><span>方案撰写</span></div>
+        <p class="sf-desc">从短视频到宣传片，叙事剪辑与节奏把控。精通 Premiere Pro、Final Cut Pro。</p>
+        <div class="sf-tags"><span>叙事剪辑</span><span>调色</span><span>AE 特效</span></div>
       </div>
-    </div>
-
     <div class="skills-meta">
       <span class="sm-left">DISCIPLINES · 01—04</span>
       <span class="sm-right">⟡ 四维一体</span>
     </div>
   </div>
 </section>
-
-<div class="section-divider" style="--divider-color:var(--bg-dark)"><svg viewBox="0 0 1200 80" preserveAspectRatio="none"><path class="divider-path" d="M0,40 Q300,10 600,40 T1200,40 L1200,80 L0,80 Z" fill="var(--bg-dark)"/></svg></div>
-
-<!-- Planet sections -->
-<div id="planetSections"></div>
 
 <div class="section-divider"><svg viewBox="0 0 1200 80" preserveAspectRatio="none"><path class="divider-path" d="M0,40 Q300,10 600,40 T1200,40 L1200,80 L0,80 Z" fill="#ffffff"/></svg></div>
 
@@ -1502,9 +1633,9 @@
         </div>
         <div class="ai-swatches" aria-hidden="true"><span style="background:#6c5ce7"></span><span style="background:#a78bfa"></span><span style="background:#2d1b69"></span></div>
         <div class="ai-card-body">
-          <div class="ai-pick-title-wrap"><span class="ai-new">Vibe Coding</span></div>
+          <div class="ai-pick-title-wrap"><span class="ai-new">网页开发</span></div>
           <h3>AI 对话 · 角色引擎</h3>
-          <p class="ai-pick-desc">用 Claude Code Vibe Coding 构建的 AI 角色对话平台</p>
+          <p class="ai-pick-desc">全栈开发的 AI 角色对话平台，一个人从创意到落地的完整实践</p>
           <p class="ai-pick-line">角色设定 · 关系网络 · 人格复刻</p>
           <div class="ai-pick-cta">
             <span class="ai-btn-pill">进一步了解</span>
@@ -1570,6 +1701,102 @@
 <!-- AI Image Lightbox -->
 <div class="ai-lb" id="aiLightbox"><button class="ai-lb-close" id="aiLbClose">✕</button><img src="" alt="放大查看"></div>
 
+<div class="section-divider"><svg viewBox="0 0 1200 80" preserveAspectRatio="none"><path class="divider-path" d="M0,40 Q300,10 600,40 T1200,40 L1200,80 L0,80 Z" fill="var(--da-bg)"/></svg></div>
+
+<!-- ===== Data Analysis ===== -->
+<section class="da-section" id="data-analysis">
+  <div class="da-inner">
+    <div class="da-header">
+      <span class="da-label">Data Analysis</span>
+      <h2>数据分析</h2>
+      <p>从数据中挖掘洞察，用理性驱动决策。</p>
+    </div>
+
+    <div class="da-grid">
+
+      <!-- Card 1: Python Weibo Sentiment Analysis -->
+      <div class="da-card" data-da-delay="0">
+        <div class="da-card-visual">🐍</div>
+        <div class="da-card-body">
+          <span class="da-card-tag">Python · 舆论分析</span>
+          <h3>微博评论爬取与情感分析</h3>
+          <p class="da-card-desc">
+            利用 Python 爬取微博"外卖大战"话题下数万条用户评论，通过 NLP 情感分析模型
+            挖掘公众情绪走向与关注焦点，生成可视化舆论报告，<strong>实现由数据驱动运营策略</strong>。
+          </p>
+          <div class="da-card-tech">
+            <span>Python</span>
+            <span>Scrapy</span>
+            <span>NLP</span>
+            <span>情感分析</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: R Financial Data Analysis -->
+      <div class="da-card" data-da-delay="1">
+        <div class="da-card-visual">📊</div>
+        <div class="da-card-body">
+          <span class="da-card-tag">R 语言 · 金融风控</span>
+          <h3>金融大数据分析与风控建模</h3>
+          <p class="da-card-desc">
+            以 R 语言为核心工具，完成智能信贷风险控制全流程建模。通过 EDA 驱动特征工程，
+            构建 Logistic 回归、XGBoost、模型集成等多方案对比，AUC 超越教学基线，
+            深入探索年龄、信用评分、债务收入比等因子与违约风险的关系。
+          </p>
+          <div class="da-card-tech">
+            <span>R</span>
+            <span>ggplot2</span>
+            <span>XGBoost</span>
+            <span>特征工程</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: SQL / Excel -->
+      <div class="da-card" data-da-delay="2">
+        <div class="da-card-visual">🗄️</div>
+        <div class="da-card-body">
+          <span class="da-card-tag">SQL · Excel</span>
+          <h3>数据查询与可视化分析</h3>
+          <p class="da-card-desc">
+            熟练运用 SQL 进行复杂数据查询、多表关联、窗口函数与聚合分析；
+            精通 Excel 数据透视表、VLOOKUP、Power Query 及图表可视化，
+            能够快速从原始数据中提取业务洞察，支撑日常运营决策。
+          </p>
+          <div class="da-card-tech">
+            <span>SQL</span>
+            <span>Excel</span>
+            <span>数据透视表</span>
+            <span>Power Query</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Machine Learning - LSTM -->
+      <div class="da-card" data-da-delay="3">
+        <div class="da-card-visual">🧠</div>
+        <div class="da-card-body">
+          <span class="da-card-tag">机器学习 · LSTM</span>
+          <h3>基于LSTM的工业增加值预测</h3>
+          <p class="da-card-desc">
+            以 Python + TensorFlow 构建 LSTM 长短期记忆神经网络模型，对全国工业增加值进行月度预测。
+            选取 PMI、发电量增速、工业品销售率、PPI 增速构建多维特征体系，通过网格搜索优化超参数，
+            实现多特征协同与轻量化调参的融合预测方案。
+          </p>
+          <div class="da-card-tech">
+            <span>Python</span>
+            <span>TensorFlow</span>
+            <span>LSTM</span>
+            <span>时间序列</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <div class="section-divider"><svg viewBox="0 0 1200 80" preserveAspectRatio="none"><path class="divider-path" d="M0,40 Q300,10 600,40 T1200,40 L1200,80 L0,80 Z" fill="var(--ops-bg)"/></svg></div>
 
 <!-- ===== Operations Experience ===== -->
@@ -1577,8 +1804,8 @@
   <div class="ops-inner">
     <div class="ops-header">
       <span class="ops-label">Operating experience</span>
-      <h2>运营经历</h2>
-      <p>从0到1搭建账号，到数据驱动内容矩阵，再到商业变现——每一步都算数。</p>
+      <h2>运营 &amp; 策划</h2>
+      <p>从活动策划到内容运营，全链路统筹与执行落地，让每个项目都有声有色。</p>
     </div>
 
     <div class="ops-timeline">
@@ -1607,25 +1834,27 @@
         </div>
       </div>
 
-      <!-- Item 2: 内容矩阵 -->
+      <!-- Item 2: 活动策划 -->
       <div class="ops-item">
         <div class="ops-visual">
-          <div class="ops-date">2024 — 2025</div>
+          <div class="ops-date">2025 — 至今</div>
           <div class="ops-img">
-            <picture><source srcset="optimized/运营/游戏合集.webp" type="image/webp"><img class="ops-img-single" src="运营/游戏合集.png" alt="游戏合集" loading="lazy"></picture>
+            <picture><source srcset="optimized/运营/活动运营.webp" type="image/webp"><img class="ops-img-single" src="运营/活动运营.jpg" alt="活动策划运营" loading="lazy"></picture>
           </div>
         </div>
         <div class="ops-content">
-          <h3>内容矩阵 · 数据驱动爆款</h3>
+          <h3>活动策划 · 全流程运营</h3>
           <p class="ops-desc">
-            从个人兴趣出发，通过数据反馈独立摸索爆款规律，
-            成功打造 <strong>2个</strong> 播放量超 <strong>23万</strong> 的垂直内容合集，具备精准的内容策划能力。
-            个人抖音日常经营账号发布多元作品，总获赞达 <strong>1.9万+</strong>。
+            全程负责活动的 <strong>策划、筹备、宣发、执行、复盘、沉淀</strong> 全链路工作，
+            吸引现场观众 <strong>230 位</strong>，选手投稿 <strong>30+ 位</strong>，
+            并负责活动舞台的 <strong>布置</strong> 与 <strong>人员协调调动</strong>，
+            从零到一落地了完整的小型赛事活动。
           </p>
           <div class="ops-metrics">
-            <span class="ops-metric"><span class="ops-mn">23万</span> 播放 × 2</span>
-            <span class="ops-metric"><span class="ops-mn">1.9万+</span> 总获赞</span>
-            <span class="ops-metric"><span class="ops-mn">数据驱动</span> 内容策略</span>
+            <span class="ops-metric"><span class="ops-mn">230位</span> 现场观众</span>
+            <span class="ops-metric"><span class="ops-mn">30+</span> 选手投稿</span>
+            <span class="ops-metric"><span class="ops-mn">全流程</span> 策划执行</span>
+            <span class="ops-metric"><span class="ops-mn">舞台统筹</span> 人员调度</span>
           </div>
         </div>
       </div>
@@ -1672,6 +1901,11 @@
   </div>
 </section>
 
+<div class="section-divider" style="--divider-color:var(--bg-dark)"><svg viewBox="0 0 1200 80" preserveAspectRatio="none"><path class="divider-path" d="M0,40 Q300,10 600,40 T1200,40 L1200,80 L0,80 Z" fill="var(--bg-dark)"/></svg></div>
+
+<!-- Planet sections -->
+<div id="planetSections"></div>
+
 <div class="section-divider"><svg viewBox="0 0 1200 80" preserveAspectRatio="none"><path class="divider-path" d="M0,40 Q300,10 600,40 T1200,40 L1200,80 L0,80 Z" fill="var(--bg)"/></svg></div>
 
 <!-- ===== Stats ===== -->
@@ -1694,8 +1928,8 @@
       <div class="about-av"><picture><source srcset="optimized/个人照片.webp" type="image/webp"><img src="个人照片.jpg" alt="李颖" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius);display:block"></picture></div>
       <div class="about-c">
         <h3><span class="line-r"><span class="lr d2">一名跨界的创造者</span></span></h3>
-        <p>我是李颖。从拿起相机剪辑第一条视频开始，到用数据驱动账号增长，再到借助 AI 重构工作流——我始终相信，<strong>技能的边界，才是创新的起点</strong>。</p>
-        <p>剪辑教会我如何讲故事，运营教会我如何让故事被看见，AI 让我以前所未有的效率工作，策划则让我把零散的点连成线。</p>
+        <p>我是李颖。从拿起相机剪辑第一条视频开始，到用数据驱动账号增长，再到借助 AI 重构工作流，如今用数据分析发掘洞察——我始终相信，<strong>技能的边界，才是创新的起点</strong>。</p>
+        <p>剪辑教会我如何讲故事，运营教会我如何让故事被看见，AI 让我以前所未有的效率工作，数据分析则让我从数据中挖掘洞察、理性决策。</p>
         <p>目前持续探索 AI+视频创作、自动化内容生产方向，致力于打造高效、可规模化的创意工作体系。</p>
         <a href="李颖-AI.pdf" class="btn btn-primary" style="margin-top:4px" target="_blank">下载简历 →</a>
       </div>
@@ -1711,7 +1945,6 @@
         <div class="contact-row"><div class="ci">📧</div><span>ly2622319390@163.com</span></div>
         <div class="contact-row"><div class="ci">📍</div><span>中国 · 远程协作</span></div>
         <div class="contact-row"><div class="ci">💬</div><span>微信: ovolyouo</span></div>
-        <div class="social-row"><a href="https://github.com/ly2622319390-afk" target="_blank" title="GitHub">🐙</a><a href="#" title="B站">📺</a><a href="#" title="知乎">💡</a><a href="#" title="微信">💬</a></div>
       </div>
     </div>
   </div>
@@ -1880,6 +2113,15 @@
   const sfO=new IntersectionObserver(entries=>{entries.forEach(e=>{if(!e.isIntersecting)return;const el=e.target;const d=+(el.dataset.delay||0);setTimeout(()=>{el.classList.add('visible')},80+d*120);sfO.unobserve(el)})},{threshold:0.12});
   document.querySelectorAll('.skill-field').forEach(el=>sfO.observe(el));
 
+  // Skill card click navigation
+  document.querySelectorAll('.skill-field[data-href]').forEach(el=>{
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', function(e){
+      const href = this.dataset.href;
+      if (href) document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
   function animC(el){const t=+el.dataset.target,d=1800,t0=performance.now();(function tk(now){const p=Math.min((now-t0)/d,1);el.textContent=Math.floor((1-Math.pow(1-p,4))*t);if(p<1)requestAnimationFrame(tk);else el.textContent=t})(performance.now())}
 
   // PS planets fall-in
@@ -1889,6 +2131,10 @@
   // Ops items scroll reveal
   const opsO=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');opsO.unobserve(e.target)}})},{threshold:0.08});
   document.querySelectorAll('.ops-item').forEach(el=>opsO.observe(el));
+
+  // DA cards scroll reveal
+  const daO=new IntersectionObserver(entries=>{entries.forEach(e=>{if(!e.isIntersecting)return;const el=e.target;const d=+(el.dataset.daDelay||0);setTimeout(()=>{el.classList.add('visible')},80+d*120);daO.unobserve(el)})},{threshold:0.12});
+  document.querySelectorAll('.da-card').forEach(el=>daO.observe(el));
 
   // ===== AI Exploration =====
   const AI_DATA = [
@@ -2666,6 +2912,10 @@ startAutoRotate();      } else {
   document.querySelector('.nav-links a[href="#ops"]')?.addEventListener('click', e => {
     e.preventDefault();
     document.getElementById('ops')?.scrollIntoView({ behavior: 'smooth' });
+  });
+  document.querySelector('.nav-links a[href="#data-analysis"]')?.addEventListener('click', e => {
+    e.preventDefault();
+    document.getElementById('data-analysis')?.scrollIntoView({ behavior: 'smooth' });
   });
   const nav=document.getElementById('nav');
   const heroEl=document.querySelector('.hero');
