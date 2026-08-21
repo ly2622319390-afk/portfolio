@@ -1,0 +1,275 @@
+{
+  "schemaVersion": "1.0",
+  "sourceRepository": "https://github.com/ly2622319390-afk/portfolio",
+  "sourceBranch": "main",
+  "generatedAt": "2026-08-21",
+  "assetPolicy": {
+    "singleSource": "Each physical media file is recorded once and referenced by project and direction indexes.",
+    "evidenceBoundary": "A screenshot proves that an output exists; it does not by itself prove user research, business impact, or sole authorship.",
+    "aiCollaboration": "Describe how Li Ying decomposed, prompted, selected, corrected, and verified AI output; do not list tools as the contribution.",
+    "unknowns": "Use pending or unknown instead of filling missing results."
+  },
+  "metrics": {
+    "haivisOfficialXiaohongshu": {
+      "status": "refresh",
+      "period": "approximately 37 days, through 2026-08-20",
+      "publishedPosts": 97,
+      "followers": 815,
+      "exposure": "approximately 110000",
+      "views": 12848,
+      "likes": 711,
+      "comments": 63,
+      "saves": 293,
+      "shares": 99,
+      "profileVisitors": 4635,
+      "netFollowerGrowth": 733,
+      "websiteUsers": 1639,
+      "activatedUsers": 1123,
+      "excludedMetrics": ["cover click-through rate", "video completion rate", "week-over-week change"],
+      "attributionNote": "Website users and activated users have no channel attribution; show them as parallel business context, not as Xiaohongshu-attributed conversions."
+    },
+    "personalDouyinColdStart": {
+      "status": "refresh",
+      "sourceAsset": "运营/从0到1运营团队.jpg",
+      "knownCopy": "Existing site states 2 months, 320000 exposure, 2500+ likes, and 280+ core followers. Reconfirm period and ownership before publication."
+    },
+    "personalXiaohongshuDelivery": {
+      "status": "refresh",
+      "sourceAssets": ["运营/小红书图文1.jpg", "运营/小红书图文2.jpg"],
+      "knownCopy": "Existing site states 200+ editing projects and 30+ travel or daily posts. Keep this separate from Haivis official account data."
+    }
+  },
+  "projects": [
+    {
+      "id": "ai-character-chat",
+      "title": "AI 对话 · 角色引擎",
+      "directionFit": ["ai-product", "ai-operations"],
+      "priority": "hero",
+      "ownership": "personal-project",
+      "status": "direct",
+      "summary": "A personal AI character conversation platform exploring character settings, relationship networks, image triggers, and personality reconstruction.",
+      "capabilities": ["AI product concept", "interaction design", "state and relationship modeling", "Vibe Coding", "frontend delivery"],
+      "assetPaths": [
+        "AI对话网站/封面.png",
+        "AI对话网站/AI角色对话1.png",
+        "AI对话网站/AI角色对话2.png",
+        "AI对话网站/特殊人设1.png",
+        "AI对话网站/特殊人设2.png",
+        "AI对话网站/随机生图机制1.png",
+        "AI对话网站/随机生图机制2.png",
+        "AI对话网站/复刻现实朋友对话1.png",
+        "AI对话网站/复刻现实朋友对话2.png"
+      ],
+      "caseFields": ["background", "userScenario", "architecture", "keyTradeoffs", "aiWorkflow", "validation", "limitations"],
+      "publicationNote": "Personal project. Confirm whether screenshots contain any third-party private conversation data before publishing."
+    },
+    {
+      "id": "herbal-ai-app",
+      "title": "本草智鉴 · 中药 AI 识别与学习",
+      "directionFit": ["ai-product"],
+      "priority": "hero",
+      "ownership": "personal-project",
+      "status": "direct",
+      "summary": "An AI learning and identification app concept combining image recognition, a materia medica catalogue, 3D interaction, and Q&A.",
+      "capabilities": ["AI scenario design", "feature decomposition", "learning flow", "multimedia interaction"],
+      "assetPaths": [
+        "AI中药APP/APP主页面封面.png",
+        "AI中药APP/拍照识别.png",
+        "AI中药APP/中药图鉴.png",
+        "AI中药APP/3D模型交互.png",
+        "AI中药APP/问答助手.png"
+      ],
+      "caseFields": ["targetUser", "recognitionFlow", "learningLoop", "aiBoundary", "prototypeEvidence", "limitations"]
+    },
+    {
+      "id": "haivis-website",
+      "title": "Haivis 官网项目",
+      "directionFit": ["ai-product", "ai-operations"],
+      "priority": "hero",
+      "ownership": "internship-official",
+      "status": "external",
+      "summary": "A Vibe Coding website project for presenting the Haivis product and its visual value.",
+      "capabilities": ["rapid prototyping", "visual hierarchy", "frontend implementation", "AI-assisted iteration"],
+      "sourceRecord": "liying-evidence-records",
+      "assetPaths": [],
+      "nextEvidence": ["approved screenshots", "code analysis", "role boundary", "design decisions", "public display permission"],
+      "publicationNote": "Do not copy company source code into this personal repository without permission."
+    },
+    {
+      "id": "haivis-promotional-animation",
+      "title": "Haivis 宣传动画",
+      "directionFit": ["ai-product", "ai-operations"],
+      "priority": "supporting",
+      "ownership": "internship-official",
+      "status": "external",
+      "summary": "A web-based promotional animation translating product value into a short visual narrative.",
+      "capabilities": ["product storytelling", "motion structure", "web coding", "AI-assisted creative production"],
+      "sourceRecord": "liying-evidence-records",
+      "assetPaths": ["视频作品/鹅鸭杀AIGC.mp4"],
+      "nextEvidence": ["Haivis animation video", "approved stills", "owned code or collaboration boundary"],
+      "publicationNote": "The listed AIGC video is an existing personal media asset, not a substitute for the Haivis company animation."
+    },
+    {
+      "id": "juicer-independent-site",
+      "title": "榨汁机品牌独立站",
+      "directionFit": ["ai-product", "ai-operations"],
+      "priority": "hero",
+      "ownership": "client-project",
+      "status": "external",
+      "summary": "An ongoing external design and development project for a juicer brand independent e-commerce site.",
+      "capabilities": ["e-commerce scenario", "information architecture", "visual design", "frontend delivery"],
+      "sourceRecord": "liying-evidence-records",
+      "assetPaths": [],
+      "nextEvidence": ["local code path", "approved screenshots", "client permission", "current completion boundary"]
+    },
+    {
+      "id": "fridge-ai-mini-program",
+      "title": "冰箱有啥吃啥 · AI 智能食谱推荐",
+      "directionFit": ["ai-product"],
+      "priority": "supporting",
+      "ownership": "personal-project",
+      "status": "direct",
+      "summary": "A food inventory and recipe recommendation concept covering ingredients, recommendations, cooking, and completion records.",
+      "capabilities": ["recommendation scenario", "user loop", "feature completeness", "mobile product thinking"],
+      "assetPaths": [
+        "optimized/fridge-app/main.webp",
+        "optimized/fridge-app/recommend.webp",
+        "optimized/fridge-app/recipe.webp",
+        "optimized/fridge-app/cooking.webp",
+        "optimized/fridge-app/done.webp",
+        "optimized/fridge-app/settings.webp"
+      ],
+      "caseFields": ["userPain", "inventoryFlow", "recommendationLogic", "retentionLoop", "prototypeBoundary"]
+    },
+    {
+      "id": "lingyu-voice-assistant",
+      "title": "灵语 · AI 语音输入助手",
+      "directionFit": ["ai-product"],
+      "priority": "supporting",
+      "ownership": "personal-project",
+      "status": "direct",
+      "summary": "An AI voice input desktop product concept for office, chat, and creative workflows with history and vocabulary management.",
+      "capabilities": ["product scenario", "desktop information architecture", "AI productivity", "workflow design"],
+      "assetPaths": [
+        "optimized/lingyu/office.webp",
+        "optimized/lingyu/chat.webp",
+        "optimized/lingyu/create.webp",
+        "optimized/lingyu/history.webp",
+        "optimized/lingyu/thesaurus.webp"
+      ]
+    },
+    {
+      "id": "ai-story-game",
+      "title": "交互游戏 · 剧情冒险",
+      "directionFit": ["ai-product"],
+      "priority": "archive",
+      "ownership": "personal-project",
+      "status": "direct",
+      "summary": "An AI-assisted interactive story prototype organized around narrative, options, and stateful progression.",
+      "capabilities": ["interaction flow", "branching choices", "AI-assisted prototyping"],
+      "assetPaths": ["游戏/封面.png", "游戏/剧情.png", "游戏/选项剧情.png", "游戏/AI辅助开发过程.png"]
+    },
+    {
+      "id": "aigc-duck-goose",
+      "title": "鹅鸭杀 · AIGC 同人漫剧",
+      "directionFit": ["ai-product", "ai-operations"],
+      "priority": "supporting",
+      "ownership": "personal-project",
+      "status": "direct",
+      "summary": "An AI-assisted narrative video covering script, visual generation, and editing.",
+      "capabilities": ["AI content workflow", "storytelling", "visual production", "editing"],
+      "assetPaths": ["视频作品/鹅鸭杀AIGC.mp4", "视频作品/鹅鸭杀AIGC封面.jpg", "AI漫剧鹅鸭杀/鹅鸭杀AIGC视频.mp4", "AI漫剧鹅鸭杀/AIGC视频封面.jpg"]
+    },
+    {
+      "id": "official-haivis-operations",
+      "title": "Haivis 官方小红书运营",
+      "directionFit": ["ai-operations", "ai-product"],
+      "priority": "hero",
+      "ownership": "internship-official",
+      "status": "refresh",
+      "summary": "A 37-day official account operation case focused on product education for e-commerce designers.",
+      "capabilities": ["content planning", "product understanding", "short-form production", "data review", "user feedback"],
+      "sourceRecord": "liying-evidence-records",
+      "assetPaths": [],
+      "metricsRef": "haivisOfficialXiaohongshu",
+      "nextEvidence": ["latest data screenshot", "representative posts", "user feedback", "content decision notes"],
+      "publicationNote": "Company account. Confirm public display permission and remove private comments or backend identifiers."
+    },
+    {
+      "id": "personal-douyin-cold-start",
+      "title": "个人抖音账号 · 从 0 到 1 冷启动",
+      "directionFit": ["ai-operations"],
+      "priority": "supporting",
+      "ownership": "personal",
+      "status": "refresh",
+      "summary": "A personal account cold-start case using trend-aware video planning and repeated production.",
+      "capabilities": ["account positioning", "topic planning", "short video production", "growth review"],
+      "assetPaths": ["运营/从0到1运营团队.jpg", "optimized/运营/从0到1运营团队.webp"],
+      "metricsRef": "personalDouyinColdStart"
+    },
+    {
+      "id": "event-operations",
+      "title": "活动策划 · 全流程运营",
+      "directionFit": ["ai-operations"],
+      "priority": "supporting",
+      "ownership": "personal",
+      "status": "refresh",
+      "summary": "An event case covering planning, promotion, execution, venue setup, coordination, and review.",
+      "capabilities": ["end-to-end planning", "promotion", "on-site execution", "coordination", "review"],
+      "assetPaths": ["运营/活动运营.jpg", "optimized/运营/活动运营.webp"]
+    },
+    {
+      "id": "personal-xiaohongshu-content",
+      "title": "个人小红书 · 内容与商业交付",
+      "directionFit": ["ai-operations"],
+      "priority": "supporting",
+      "ownership": "personal",
+      "status": "refresh",
+      "summary": "Personal multi-format content and editing delivery across travel, daily-life, and commercial contexts.",
+      "capabilities": ["copy planning", "photo and video production", "platform adaptation", "client delivery"],
+      "assetPaths": [
+        "运营/小红书图文1.jpg",
+        "运营/小红书图文2.jpg",
+        "optimized/运营/小红书图文1.webp",
+        "optimized/运营/小红书图文2.webp"
+      ],
+      "metricsRef": "personalXiaohongshuDelivery",
+      "publicationNote": "Use travel-specific framing only for travel, tourism, or lifestyle roles."
+    },
+    {
+      "id": "video-editing-library",
+      "title": "视频剪辑作品集",
+      "directionFit": ["ai-operations"],
+      "priority": "archive",
+      "ownership": "personal",
+      "status": "direct",
+      "summary": "A reusable video library showing editing rhythm, trend-based remixing, visual effects, and color work.",
+      "capabilities": ["short video editing", "trend interpretation", "story rhythm", "color grading", "AE effects"],
+      "assetPaths": [
+        "视频作品/我的世界·向阳而生.mp4",
+        "视频作品/当我在王力宏演唱会摸出了非洲之心.mp4",
+        "视频作品/鹅鸭杀搞笑向.mp4",
+        "视频作品/鸽子调色.mp4",
+        "视频作品/无畏契约搞笑混剪.mp4",
+        "视频作品/演唱会转场.mp4",
+        "视频作品/鹅鸭杀搞笑向视频封面.jpg"
+      ],
+      "publicationNote": "Check third-party music, game footage, and commercial usage rights before external publication."
+    }
+  ],
+  "sharedAssets": [
+    {"path": "个人照片.jpg", "type": "image", "role": ["profile", "about"], "status": "direct", "visibility": "confirm"},
+    {"path": "作品集网站封面底图.JPG", "type": "image", "role": ["cover", "branding"], "status": "direct", "visibility": "direct"},
+    {"path": "cross-disciplinary-resonance.png", "type": "image", "role": ["about", "method"], "status": "direct", "visibility": "direct"},
+    {"path": "李颖-AI.pdf", "type": "pdf", "role": ["resume-download"], "status": "refresh", "visibility": "direct"},
+    {"path": "design-philosophy.md", "type": "document", "role": ["design-reference"], "status": "direct", "visibility": "direct"},
+    {"path": "fourfold-harmony.md", "type": "document", "role": ["design-reference"], "status": "direct", "visibility": "direct"}
+  ],
+  "sourcePages": [
+    {"path": "index.html", "role": "current-homepage", "status": "direct"},
+    {"path": "ai-exploration.html", "role": "ai-project-detail-page", "status": "direct"},
+    {"path": "pomodoro.html", "role": "standalone-tool", "status": "archive"},
+    {"path": "scripts/optimize-images.mjs", "role": "asset-optimization", "status": "direct"},
+    {"path": "scripts/update-html.mjs", "role": "asset-update", "status": "direct"}
+  ]
+}

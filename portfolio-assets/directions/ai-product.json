@@ -1,0 +1,15 @@
+{
+  "direction": "ai-product",
+  "title": "AI 产品经理作品集",
+  "positioning": "用 Vibe Coding 将 AI 产品想法转化为可体验、可解释、可迭代的界面与交互。",
+  "heroOrder": ["haivis-website", "ai-character-chat", "juicer-independent-site", "herbal-ai-app"],
+  "supportingOrder": ["fridge-ai-mini-program", "lingyu-voice-assistant", "haivis-promotional-animation", "aigc-duck-goose", "ai-story-game"],
+  "showcaseFields": ["problem", "userScenario", "productArchitecture", "featureBoundary", "aiWorkflow", "validation", "limitations", "evidenceLinks"],
+  "hideOrArchiveByDefault": ["video-editing-library", "personal-xiaohongshu-content", "event-operations"],
+  "operationsBridge": "Keep Haivis official operations as a secondary case for product understanding, user education, and feedback loops. Do not present content output alone as complete product management experience.",
+  "homepageMetrics": ["37 days of Haivis product-content practice", "97 posts produced", "approximately 110000 exposure"],
+  "notes": [
+    "The website and animation demonstrate rapid prototyping, visual expression, and delivery; add problem discovery or validation evidence before claiming full product methodology.",
+    "For the juicer project, label it external and in progress until client permission and completion scope are confirmed."
+  ]
+}

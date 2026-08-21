@@ -1,0 +1,19 @@
+{
+  "direction": "ai-operations",
+  "title": "AI 运营作品集",
+  "positioning": "用内容、视觉与数据让 AI 产品被理解、被使用、被传播。",
+  "heroOrder": ["official-haivis-operations", "personal-xiaohongshu-content", "haivis-promotional-animation", "haivis-website"],
+  "supportingOrder": ["personal-douyin-cold-start", "event-operations", "video-editing-library", "juicer-independent-site"],
+  "showcaseFields": ["audience", "contentHypothesis", "productionProcess", "platformAdaptation", "metrics", "feedback", "review", "evidenceLinks"],
+  "conditionalProjects": {
+    "travelOrTourismJD": ["personal-xiaohongshu-content"],
+    "aiProductJD": ["official-haivis-operations", "haivis-promotional-animation"],
+    "generalContentJD": ["official-haivis-operations", "personal-douyin-cold-start", "personal-xiaohongshu-content"]
+  },
+  "homepageMetrics": ["37-day official Haivis operation", "97 posts produced", "815 current followers", "approximately 110000 exposure"],
+  "dataBoundary": "Show website users (1639) and activated users (1123) as parallel business context unless channel attribution is added.",
+  "notes": [
+    "Personal accounts and the Haivis official account are separate evidence groups.",
+    "Travel content can be emphasized for tourism roles and kept as a compact multi-platform example for other roles."
+  ]
+}
